@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const routes = require('../../routes');
 
-const { port } = require('../env');
+const { port, version } = require('../env');
 const { StatusCodes } = require('http-status-codes');
 
 const app = express();
@@ -23,7 +23,7 @@ app.use(express.urlencoded({
   extended: true,
 }));
 
-Object.keys(routes).forEach((key) => app.use(`/api/imdb/${key}`, routes[key]));
+Object.keys(routes).forEach((key) => app.use(`/api/${version}/${key}`, routes[key]));
 
 app.use((req, res, next) => {
   next(new ApplicationError(messages.notFound('route'), StatusCodes.NOT_FOUND));

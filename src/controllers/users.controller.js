@@ -7,4 +7,5 @@ module.exports = {
 
     return response.json({ name, email, nickname});
   }),
+
 };

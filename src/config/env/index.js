@@ -3,8 +3,8 @@ const path = require('path');
 
 dotenv.config({
   path: process.env.NODE_ENV === 'test'
-    ? path.join(__dirname, '../../.env.test')
-    : path.join(__dirname, '../../.env'),
+    ? path.join(__dirname, '../../../.env.test')
+    : path.join(__dirname, '../../../.env'),
 });
 
 module.exports = {

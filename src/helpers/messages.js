@@ -8,5 +8,5 @@ module.exports.messages = {
   invalidPassword: 'invalid-password',
   authMissing: 'missing-authorization-header',
   internalError: 'internal-server-error',
-  unauthorized: 'unauthorized-login',
+  unauthorized: (param) => `${param}-unauthorized`,
 };

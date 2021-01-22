@@ -23,7 +23,7 @@ module.exports= {
     const userData = findUser[0].dataValues;
 
     if(userData.disabled === true) {
-      throw new ApplicationError(messages.unauthorized(), StatusCodes.UNAUTHORIZED);
+      throw new ApplicationError(messages.unauthorized('login'), StatusCodes.UNAUTHORIZED);
     }
     
     const passwordMatched = await compare(password, userData.password);

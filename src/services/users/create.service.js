@@ -9,8 +9,17 @@ const { userRepository } = require('../../repositories');
 module.exports= {
   create: async(params) => {
     
-    const { email } = params;
+    const { email, id_user , admin} = params;
     
+    const findAdm = await userRepository.find({
+      id: id_user,
+      admin: true,
+    });
+
+    if(findAdm.length <= 0 && admin === true) {
+      throw new ApplicationError(messages.unauthorized('create-adm'), StatusCodes.UNAUTHORIZED);
+    }
+
     const findUser = await userRepository.find({ email });
 
    

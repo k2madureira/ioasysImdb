@@ -23,11 +23,10 @@ module.exports= {
     try {
       const response = await db.sequelize.transaction( async (transaction)=> {
 
-        const password = await hash(params.password, 8);
+        params.password = await hash(params.password, 8);
         
         const newUser = {
           ...params,
-          passwordHash: password,
           disabled: 0,
         }
         

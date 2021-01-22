@@ -1,10 +1,14 @@
 const { StatusCodes } = require('http-status-codes');
 const { catchAsync } = require('../utils');
+const { userService } = require('../services');
 
 module.exports = {
-  create: catchAsync(async(request, response) => {
-    const { name, email, nickname, password, admin = false } = request.body;
+  create: catchAsync(async(req, res) => {
+    const { body } = req;
 
-    return response.json({ name, email, nickname});
+    const response = await userService.create(body); 
+
+    return res.json(response);
   }),
+
 };

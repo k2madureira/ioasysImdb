@@ -1,15 +1,14 @@
 const { StatusCodes } = require('http-status-codes');
 const { catchAsync } = require('../utils');
-
-const db = require('../models')
+const { userService } = require('../services');
 
 module.exports = {
-  create: catchAsync(async(request, response) => {
-    const { name, email, nickname, password, admin = false } = request.body;
+  create: catchAsync(async(req, res) => {
+    const { body } = req;
 
-  
+    const response = await userService.create(body); 
 
-    return response.json({ name, email, nickname});
+    return res.json(response);
   }),
 
 };

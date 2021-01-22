@@ -4,9 +4,10 @@ const { ApplicationError } = require('../utils');
 const { messages } = require('../helpers');
 
 module.exports = (schema) => async (req, res, next) => {
-  const requestObject = Object.fromEntries(
-    Object.entries(req).filter(([key]) => ['query', 'params', 'body'].includes(key)),
-  );
+
+  const entries = Object.entries(req).filter(([key]) => ['query', 'params', 'body'].includes(key));
+  
+  const requestObject = Object.fromEntries(entries);
 
   try {
     const value = await yup

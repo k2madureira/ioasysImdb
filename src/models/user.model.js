@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       password: {
         type: DataTypes.STRING,
-        field: 'passwordHash',
+        field: 'password_hash',
         allowNull: false,
       },
       admin: {
@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       tableName: 'users',
-      underscored: false,
+      underscored: true,
       
     },
   );

@@ -1,7 +1,8 @@
 const { User } = require('../models');
 
 module.exports = {
-  get: (params) => User.findOne({ where: params }),
-  getById: (id) => User.findByPk(id),
+  
+  find: (params = '') => User.findAll({ where: params }),
+  findById: (id) => User.findByPk(id),
   create: (params) => User.create(params),
 };

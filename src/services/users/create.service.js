@@ -8,39 +8,31 @@ const { userRepository } = require('../../repositories');
 
 module.exports= {
   create: async(params) => {
+    
     const { email } = params;
     
-    
-    const findUser = await userRepository.get({
-      email,
-    });
-    
-    if(findUser) {
+    const findUser = await userRepository.find({ email });
+
+   
+    if(findUser.length > 0) {
       throw new ApplicationError(messages.alreadyExists('email'), StatusCodes.CONFLICT);
     }
 
 
-    try {
-      const response = await db.sequelize.transaction( async (transaction)=> {
+    const response = await db.sequelize.transaction( async (transaction)=> {
 
-        params.password = await hash(params.password, 8);
-        
-        const newUser = {
-          ...params,
-          disabled: 0,
-        }
-        
-        const user = await userRepository.create(newUser, transaction);
-        return user;
-      });
-     
-      return response;
-    } catch (err) {
-      if(err.response) {
-        throw new ApplicationError(err.response.data[0].mensagem, error.response.status);
+      //params.password = await hash(params.password, 8);
+      
+      const newUser = {
+        ...params,
       }
-      return err;
-    }
+      
+      const user = await userRepository.create(newUser, transaction);
+      return user;
+    });
+    
+    return response;
+    
    
   },
 };

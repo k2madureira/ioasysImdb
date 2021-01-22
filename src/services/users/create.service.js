@@ -21,8 +21,6 @@ module.exports= {
 
     const response = await db.sequelize.transaction( async (transaction)=> {
 
-      //params.password = await hash(params.password, 8);
-      
       const newUser = {
         ...params,
       }

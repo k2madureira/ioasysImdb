@@ -9,7 +9,7 @@ const { userRepository } = require('../../repositories');
 const authConfig = require('../../config/auth');
 
 module.exports= {
-  Authenticate: async(params) => {
+  authenticate: async(params) => {
     
     const { email, password } = params;
     

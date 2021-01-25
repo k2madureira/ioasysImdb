@@ -7,7 +7,7 @@ const {
   validationSchemas: { users }
 } = require('../validations');
 
-router.post('/login', validate(users.session), sessionController.Authenticate);
+router.post('/login', validate(users.session), sessionController.authenticate);
 
 router.use(ensureAuthenticated.auth);
 router.post('/create', validate(users.create), userController.create);

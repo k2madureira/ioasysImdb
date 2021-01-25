@@ -8,9 +8,8 @@ const { userRepository } = require('../../repositories');
 module.exports = {
   update: async (body, idLoginUser, idUpdatedUser) => {
     const {
-      old_password,
+      oldPassword,
       password,
-      password_confirmation,
       admin,
     } = body;
 
@@ -19,7 +18,7 @@ module.exports = {
       admin: true,
     });
 
-    if (findAdm.length <= 0 && admin === true) {
+    if (findAdm.length === 0 && admin === true) {
       throw new ApplicationError(messages.unauthorized('You must be an administrator to update a user at the same level. '), StatusCodes.UNAUTHORIZED);
     }
 
@@ -29,19 +28,14 @@ module.exports = {
       throw new ApplicationError(messages.notFound('user'), StatusCodes.NOT_FOUND);
     }
 
-    if (old_password) {
-      const compareHash = await compare(old_password, user.password);
+    if (oldPassword) {
+      const compareHash = await compare(oldPassword, user.password);
 
       if (!compareHash) {
         throw new ApplicationError(messages.invalidPassword, StatusCodes.CONFLICT);
       }
-
-      if (!password || !password_confirmation) {
-        let fields = '';
-        fields = !password ? ' password' : '';
-        fields += !password_confirmation ? ' password_confirmation' : '';
-        throw new ApplicationError(messages.notFoundFields(`${fields}`), StatusCodes.NOT_FOUND);
-      }
+    } else if (!oldPassword && password) {
+      throw new ApplicationError(messages.notFound('fields (password / passwordConfirmation)'), StatusCodes.NOT_FOUND);
     }
 
     Object.assign(user, body);

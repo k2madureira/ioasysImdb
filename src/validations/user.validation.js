@@ -21,9 +21,9 @@ const update = {
     name: yup.string(),
     email: yup.string().email(),
     nickname: yup.string(),
-    old_password: yup.string(),
+    oldPassword: yup.string(),
     password: yup.string(),
-    password_confirmation: yup.string()
+    passwordConfirmation: yup.string()
       .oneOf([yup.ref('password'), null], 'Passwords must match'),
     admin: yup.boolean(),
   }),

@@ -13,7 +13,7 @@ module.exports = {
       admin: true,
     });
 
-    if (findAdm.length <= 0 && admin === true) {
+    if (findAdm.length === 0 && admin === true) {
       throw new ApplicationError(messages.unauthorized('You must be an administrator to register a user at the same level. '), StatusCodes.UNAUTHORIZED);
     }
 

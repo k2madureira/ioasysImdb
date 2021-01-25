@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const { ConnectionTimedOutError } = require('sequelize');
 const { userController,  sessionController } = require('../controllers');
 const { validate, ensureAuthenticated } = require('../middlewares');
 

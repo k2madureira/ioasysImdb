@@ -23,7 +23,8 @@ const update = {
     nickname: yup.string(),
     oldPassword: yup.string(),
     password: yup.string(),
-    passwordConfirmation: yup.string()
+    passwordConfirmation: yup
+      .string()
       .oneOf([yup.ref('password'), null], 'Passwords must match'),
     admin: yup.boolean(),
   }),
@@ -36,7 +37,6 @@ const session = {
   body: yup.object().shape({
     email: yup.string().email().required(),
     password: yup.string().required(),
-
   }),
 };
 

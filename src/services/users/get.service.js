@@ -7,8 +7,11 @@ const { userRepository } = require('../../repositories');
 module.exports.get = async (id) => {
   const user = await userRepository.getById(id);
 
-  if(!user){
-    throw new ApplicationError(messages.notFound('users'), StatusCodes.NOT_FOUND);
+  if (!user) {
+    throw new ApplicationError(
+      messages.notFound('users'),
+      StatusCodes.NOT_FOUND
+    );
   }
 
   return user;

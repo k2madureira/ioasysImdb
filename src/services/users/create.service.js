@@ -14,13 +14,21 @@ module.exports = {
     });
 
     if (findAdm.length === 0 && admin === true) {
-      throw new ApplicationError(messages.unauthorized('You must be an administrator to register a user at the same level. '), StatusCodes.UNAUTHORIZED);
+      throw new ApplicationError(
+        messages.unauthorized(
+          'You must be an administrator to register a user at the same level. '
+        ),
+        StatusCodes.UNAUTHORIZED
+      );
     }
 
     const findUser = await userRepository.find({ email });
 
     if (findUser.length > 0) {
-      throw new ApplicationError(messages.alreadyExists('email'), StatusCodes.CONFLICT);
+      throw new ApplicationError(
+        messages.alreadyExists('email'),
+        StatusCodes.CONFLICT
+      );
     }
 
     const response = await db.sequelize.transaction(async (transaction) => {

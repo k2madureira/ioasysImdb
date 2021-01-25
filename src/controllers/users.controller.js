@@ -18,13 +18,8 @@ module.exports = {
     const idLoginUser = req.user.id;
     const idUpdatedUser = id;
 
-    const response = await userService.update(
-      body,
-      idLoginUser,
-      idUpdatedUser,
-    );
+    const response = await userService.update(body, idLoginUser, idUpdatedUser);
 
     return res.json(response);
   }),
-
 };

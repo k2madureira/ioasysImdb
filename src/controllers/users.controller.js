@@ -5,7 +5,7 @@ const { userService } = require('../services');
 module.exports = {
   create: catchAsync(async(req, res) => {
     const { body } = req;
-    body.id_user = req.user.id;
+    body.idUser = req.user.id;
 
     const response = await userService.create(body); 
 

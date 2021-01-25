@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { ConnectionTimedOutError } = require('sequelize');
 const { userController,  sessionController } = require('../controllers');
 const { validate, ensureAuthenticated } = require('../middlewares');
 
@@ -8,7 +9,8 @@ const {
 
 router.post('/login', validate(users.session), sessionController.Authenticate);
 
-router.post('/create', validate(users.create),ensureAuthenticated.auth, userController.create);
+router.use(ensureAuthenticated.auth);
+router.post('/create', validate(users.create), userController.create);
 
 
 

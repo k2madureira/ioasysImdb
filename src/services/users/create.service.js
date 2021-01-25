@@ -9,15 +9,15 @@ const { userRepository } = require('../../repositories');
 module.exports= {
   create: async(params) => {
     
-    const { email, id_user , admin} = params;
+    const { email, idUser , admin} = params;
     
     const findAdm = await userRepository.find({
-      id: id_user,
+      id: idUser,
       admin: true,
     });
 
     if(findAdm.length <= 0 && admin === true) {
-      throw new ApplicationError(messages.unauthorized('create-adm'), StatusCodes.UNAUTHORIZED);
+      throw new ApplicationError(messages.unauthorized('You must be an administrator to register a user at the same level. '), StatusCodes.UNAUTHORIZED);
     }
 
     const findUser = await userRepository.find({ email });

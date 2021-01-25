@@ -5,7 +5,7 @@ module.exports.messages = {
   invalidPassword: 'invalid-password',
   expiredToken: 'expired-token',
   invalidAuthFormat: 'invalid-authorization-format',
-  invalidPassword: 'invalid-password',
+  invalidToken: 'invalid-token',
   authMissing: 'missing-authorization-header',
   internalError: 'internal-server-error',
   unauthorized: (param) => `${param}-unauthorized`,

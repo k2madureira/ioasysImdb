@@ -9,8 +9,17 @@ const { userRepository } = require('../../repositories');
 module.exports= {
   create: async(params) => {
     
-    const { email } = params;
+    const { email, idUser , admin} = params;
     
+    const findAdm = await userRepository.find({
+      id: idUser,
+      admin: true,
+    });
+
+    if(findAdm.length <= 0 && admin === true) {
+      throw new ApplicationError(messages.unauthorized('You must be an administrator to register a user at the same level. '), StatusCodes.UNAUTHORIZED);
+    }
+
     const findUser = await userRepository.find({ email });
 
    
@@ -21,8 +30,6 @@ module.exports= {
 
     const response = await db.sequelize.transaction( async (transaction)=> {
 
-      //params.password = await hash(params.password, 8);
-      
       const newUser = {
         ...params,
       }

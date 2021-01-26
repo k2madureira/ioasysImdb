@@ -9,12 +9,7 @@ module.exports = {
     const { email, loginUser, admin } = params;
 
     if (!loginUser.admin && admin === true) {
-      throw new ApplicationError(
-        messages.unauthorized(
-          'You must be an administrator to register a user at the same level. ',
-        ),
-        StatusCodes.UNAUTHORIZED,
-      );
+      throw new ApplicationError(messages.notAdmin(), StatusCodes.UNAUTHORIZED);
     }
 
     const findUser = await userRepository.findOne({ email });

@@ -3,20 +3,20 @@ const { compare } = require('bcryptjs');
 const { messages } = require('../../helpers');
 const { ApplicationError } = require('../../utils');
 const { userRepository } = require('../../repositories');
+const {
+  validationSchemas: { isAdmin },
+} = require('../../validations');
 
 module.exports = {
   update: async (body, idLoginUser, idUpdatedUser) => {
-    const { oldPassword, password, admin } = body;
+    const { oldPassword, password, admin = false } = body;
 
-    const findAdm = await userRepository.find({
-      id: idLoginUser,
-      admin: true,
-    });
+    const checkAdmin = await isAdmin(idLoginUser);
 
-    if (findAdm.length === 0 && admin === true) {
+    if (!checkAdmin && admin === true) {
       throw new ApplicationError(
         messages.unauthorized(
-          'You must be an administrator to update a user at the same level. ',
+          'You must be an administrator to register a user at the same level. ',
         ),
         StatusCodes.UNAUTHORIZED,
       );

@@ -27,7 +27,7 @@ module.exports = {
     } catch (error) {
       throw new ApplicationError(
         messages.invalidToken,
-        StatusCodes.BAD_REQUEST
+        StatusCodes.BAD_REQUEST,
       );
     }
   }),

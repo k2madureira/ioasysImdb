@@ -9,7 +9,7 @@ const { userRepository } = require('../../repositories');
 const authConfig = require('../../config/auth');
 
 module.exports = {
-  authenticate: async (params) => {
+  authenticate: async params => {
     const { email, password } = params;
 
     const findUser = await userRepository.find({ email });
@@ -17,7 +17,7 @@ module.exports = {
     if (findUser.length <= 0) {
       throw new ApplicationError(
         messages.alreadyExists('email'),
-        StatusCodes.NOT_FOUND
+        StatusCodes.NOT_FOUND,
       );
     }
 
@@ -26,7 +26,7 @@ module.exports = {
     if (userData.disabled === true) {
       throw new ApplicationError(
         messages.unauthorized('login'),
-        StatusCodes.UNAUTHORIZED
+        StatusCodes.UNAUTHORIZED,
       );
     }
 
@@ -35,7 +35,7 @@ module.exports = {
     if (!passwordMatched) {
       throw new ApplicationError(
         messages.invalidPassword(),
-        StatusCodes.CONFLICT
+        StatusCodes.CONFLICT,
       );
     }
 

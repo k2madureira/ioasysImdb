@@ -5,8 +5,22 @@ const { ApplicationError } = require('../../utils');
 const { userRepository } = require('../../repositories');
 
 module.exports = {
-  update: async (body, idUpdatedUser) => {
-    const { oldPassword, password } = body;
+  update: async (body, idLoginUser, idUpdatedUser) => {
+    const { oldPassword, password, admin } = body;
+
+    const findAdm = await userRepository.find({
+      id: idLoginUser,
+      admin: true,
+    });
+
+    if (findAdm.length === 0 && admin === true) {
+      throw new ApplicationError(
+        messages.unauthorized(
+          'You must be an administrator to update a user at the same level. ',
+        ),
+        StatusCodes.UNAUTHORIZED,
+      );
+    }
 
     const user = await userRepository.findById(idUpdatedUser);
 

@@ -4,7 +4,7 @@ const { userService } = require('../services');
 module.exports = {
   create: catchAsync(async (req, res) => {
     const { body } = req;
-    body.idLoginUser = req.user.id;
+    body.loginUser = req.user;
 
     const response = await userService.create(body);
 
@@ -15,10 +15,20 @@ module.exports = {
     const { body } = req;
     const { id } = req.params;
 
-    const idLoginUser = req.user.id;
+    body.loginUser = req.user;
     const idUpdatedUser = id;
 
-    const response = await userService.update(body, idLoginUser, idUpdatedUser);
+    const response = await userService.update(body, idUpdatedUser);
+
+    return res.json(response);
+  }),
+
+  delete: catchAsync(async (req, res) => {
+    const { params } = req;
+
+    params.loginUser = req.user;
+
+    const response = await userService.del(params);
 
     return res.json(response);
   }),

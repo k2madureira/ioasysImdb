@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       tableName: 'users',
       underscored: true,
-    }
+    },
   );
 
   User.beforeSave(async (user, options) => {
@@ -75,7 +75,7 @@ module.exports = (sequelize, DataTypes) => {
   User.prototype.toJSON = function () {
     const user = { ...this.get() };
     return Object.fromEntries(
-      Object.entries(user).filter(([key]) => !['password'].includes(key))
+      Object.entries(user).filter(([key]) => !['password'].includes(key)),
     );
   };
 

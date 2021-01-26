@@ -33,6 +33,12 @@ const update = {
   }),
 };
 
+const del = {
+  params: yup.object().shape({
+    id: yup.string().required(),
+  }),
+};
+
 const session = {
   body: yup.object().shape({
     email: yup.string().email().required(),
@@ -44,5 +50,6 @@ module.exports.users = {
   get,
   create,
   update,
+  del,
   session,
 };

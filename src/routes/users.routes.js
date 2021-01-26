@@ -11,5 +11,6 @@ router.post('/login', validate(users.session), sessionController.authenticate);
 router.use(ensureAuthenticated.auth);
 router.post('/', validate(users.create), userController.create);
 router.put('/:id', validate(users.update), userController.update);
+router.delete('/:id', validate(users.del), userController.delete);
 
 module.exports.users = router;

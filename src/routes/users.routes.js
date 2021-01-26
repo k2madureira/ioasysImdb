@@ -1,6 +1,10 @@
 const router = require('express').Router();
 const { userController, sessionController } = require('../controllers');
-const { validate, ensureAuthenticated } = require('../middlewares');
+const {
+  validate,
+  ensureAuthenticated,
+  ensureAdmin,
+} = require('../middlewares');
 
 const {
   validationSchemas: { users },
@@ -9,6 +13,8 @@ const {
 router.post('/login', validate(users.session), sessionController.authenticate);
 
 router.use(ensureAuthenticated.auth);
+
+router.use(ensureAdmin.admin);
 router.post('/', validate(users.create), userController.create);
 router.put('/:id', validate(users.update), userController.update);
 

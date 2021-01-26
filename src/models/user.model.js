@@ -1,9 +1,8 @@
 const { hash } = require('bcryptjs');
 
-
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
-    'User', 
+    'User',
     {
       id: {
         type: DataTypes.UUID,
@@ -54,8 +53,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       tableName: 'users',
       underscored: true,
-      
-    },
+    }
   );
 
   User.beforeSave(async (user, options) => {
@@ -66,9 +64,19 @@ module.exports = (sequelize, DataTypes) => {
     return user;
   });
 
-  User.prototype.toJSON = function() {
+  User.beforeUpdate(async (user, options) => {
+    const password = await hash(user.password, 8);
+    if (user.changed('password')) {
+      Object.assign(user, { password });
+    }
+    return user;
+  });
+
+  User.prototype.toJSON = function () {
     const user = { ...this.get() };
-    return Object.fromEntries(Object.entries(user).filter(([key]) => !['password'].includes(key)));
+    return Object.fromEntries(
+      Object.entries(user).filter(([key]) => !['password'].includes(key))
+    );
   };
 
   return User;

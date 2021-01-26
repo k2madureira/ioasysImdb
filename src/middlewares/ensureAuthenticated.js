@@ -1,36 +1,34 @@
 const { verify } = require('jsonwebtoken');
-const { messages } = require('../helpers');
 const { StatusCodes } = require('http-status-codes');
+const { messages } = require('../helpers');
 const { ApplicationError, catchAsync } = require('../utils');
 const authConfig = require('../config/auth');
 
 module.exports = {
+  auth: catchAsync(async (request, response, next) => {
+    const authHeader = request.headers.authorization;
 
-  auth: catchAsync(async (request, response, next) =>{
-    
-      
-      const authHeader = request.headers.authorization;
+    if (!authHeader) {
+      throw new ApplicationError(messages.authMissing, StatusCodes.BAD_REQUEST);
+    }
 
-      if(!authHeader){
-        throw new ApplicationError(messages.authMissing, StatusCodes.BAD_REQUEST)
-      }
-    
-      try {
-        const [ , token] = authHeader.split(' ');
-      
-        const decoded = verify(token, authConfig.jwt.secret);
+    try {
+      const [, token] = authHeader.split(' ');
 
-        const { sub } = decoded;
+      const decoded = verify(token, authConfig.jwt.secret);
 
-        request.user = {
-          id: sub,
-        }
+      const { sub } = decoded;
 
-        return next();
+      request.user = {
+        id: sub,
+      };
 
-      } catch (error) {
-        throw new ApplicationError(messages.invalidToken, StatusCodes.BAD_REQUEST)
-      }
-      
+      return next();
+    } catch (error) {
+      throw new ApplicationError(
+        messages.invalidToken,
+        StatusCodes.BAD_REQUEST,
+      );
+    }
   }),
 };

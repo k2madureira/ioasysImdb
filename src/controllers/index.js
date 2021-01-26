@@ -3,5 +3,5 @@ const sessionController = require('./session.controller');
 
 module.exports = {
   userController,
-  sessionController
-}
+  sessionController,
+};

@@ -2,9 +2,13 @@ const morgan = require('morgan');
 const { StatusCodes } = require('http-status-codes');
 const { logger } = require('./logger');
 
-morgan.token('message', (request, response) => response.locals.errorMessage || '');
+morgan.token(
+  'message',
+  (request, response) => response.locals.errorMessage || ''
+);
 
-const getIPFormat = () => (process.env.NODE_ENV === 'production' ? ':remote-addr -' : '');
+const getIPFormat = () =>
+  process.env.NODE_ENV === 'production' ? ':remote-addr -' : '';
 const successResponseFormat = `${getIPFormat()}:method :url - :status - :response-time ms - :date[iso]`;
 const errorResponseFormat = `${getIPFormat()}:method :url - :status - :response-time ms - :date[iso]`;
 

@@ -1,5 +1,11 @@
 module.exports.ApplicationError = class ApplicationError extends Error {
-  constructor(message, status, isOperational = true, stack = '', errors = null) {
+  constructor(
+    message,
+    status,
+    isOperational = true,
+    stack = '',
+    errors = null
+  ) {
     super(message);
 
     this.name = this.constructor.name;

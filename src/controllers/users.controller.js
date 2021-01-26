@@ -1,3 +1,4 @@
+const { StatusCodes } = require('http-status-codes');
 const { catchAsync } = require('../utils');
 const { userService } = require('../services');
 
@@ -30,7 +31,7 @@ module.exports = {
 
     await userService.destroy(params);
 
-    return res.status(200).json({
+    return res.status(StatusCodes.OK).json({
       message: 'User deleted with success.',
     });
   }),

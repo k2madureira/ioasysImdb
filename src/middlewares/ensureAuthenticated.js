@@ -3,6 +3,7 @@ const { StatusCodes } = require('http-status-codes');
 const { messages } = require('../helpers');
 const { ApplicationError, catchAsync } = require('../utils');
 const authConfig = require('../config/auth');
+const { userRepository } = require('../repositories');
 
 module.exports = {
   auth: catchAsync(async (request, response, next) => {
@@ -19,8 +20,11 @@ module.exports = {
 
       const { sub } = decoded;
 
+      const user = await userRepository.findById(sub);
+
       request.user = {
         id: sub,
+        admin: user.admin,
       };
 
       return next();

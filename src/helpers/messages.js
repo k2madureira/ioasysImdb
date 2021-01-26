@@ -10,4 +10,6 @@ module.exports.messages = {
   authMissing: 'missing-authorization-header',
   internalError: 'internal-server-error',
   unauthorized: param => `${param}-unauthorized`,
+  notAdmin:
+    'You must be an administrator to register a user at the same level. ',
 };

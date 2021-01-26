@@ -12,25 +12,16 @@ module.exports = {
   authenticate: async params => {
     const { email, password } = params;
 
-    const findUser = await userRepository.find({ email });
+    const user = await userRepository.findOne({ email });
 
-    if (findUser.length <= 0) {
+    if (!user) {
       throw new ApplicationError(
         messages.notFound('email'),
         StatusCodes.NOT_FOUND,
       );
     }
 
-    const userData = findUser[0].dataValues;
-
-    if (userData.disabled === true) {
-      throw new ApplicationError(
-        messages.unauthorized('login'),
-        StatusCodes.UNAUTHORIZED,
-      );
-    }
-
-    const passwordMatched = await compare(password, userData.password);
+    const passwordMatched = await compare(password, user.password);
 
     if (!passwordMatched) {
       throw new ApplicationError(
@@ -42,14 +33,14 @@ module.exports = {
     const { secret, expiresIn } = authConfig.jwt;
 
     const token = sign({}, secret, {
-      subject: userData.id,
+      subject: user.id,
       expiresIn,
     });
 
     const response = {
       user: {
-        name: userData.name,
-        email: userData.email,
+        name: user.name,
+        email: user.email,
       },
       token,
     };

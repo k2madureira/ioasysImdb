@@ -3,28 +3,18 @@ const { messages } = require('../../helpers');
 const { ApplicationError } = require('../../utils');
 const db = require('../../models');
 const { userRepository } = require('../../repositories');
-const {
-  validationSchemas: { isAdmin },
-} = require('../../validations');
 
 module.exports = {
   create: async params => {
-    const { email, idLoginUser, admin } = params;
+    const { email, loginUser, admin } = params;
 
-    const checkAdmin = await isAdmin(idLoginUser);
-
-    if (!checkAdmin && admin === true) {
-      throw new ApplicationError(
-        messages.unauthorized(
-          'You must be an administrator to register a user at the same level. ',
-        ),
-        StatusCodes.UNAUTHORIZED,
-      );
+    if (!loginUser.admin && admin === true) {
+      throw new ApplicationError(messages.notAdmin(), StatusCodes.UNAUTHORIZED);
     }
 
-    const findUser = await userRepository.find({ email });
+    const findUser = await userRepository.findOne({ email });
 
-    if (findUser.length > 0) {
+    if (findUser) {
       throw new ApplicationError(
         messages.alreadyExists('email'),
         StatusCodes.CONFLICT,

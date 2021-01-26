@@ -16,7 +16,7 @@ module.exports = {
 
     if (findUser.length <= 0) {
       throw new ApplicationError(
-        messages.alreadyExists('email'),
+        messages.notFound('email'),
         StatusCodes.NOT_FOUND,
       );
     }

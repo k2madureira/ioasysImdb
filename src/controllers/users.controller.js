@@ -28,8 +28,10 @@ module.exports = {
 
     params.loginUser = req.user;
 
-    const response = await userService.del(params);
+    await userService.destroy(params);
 
-    return res.json(response);
+    return res.status(200).json({
+      message: 'User deleted with success.',
+    });
   }),
 };

@@ -4,7 +4,7 @@ const { ApplicationError } = require('../../utils');
 const { userRepository } = require('../../repositories');
 
 module.exports = {
-  del: async params => {
+  destroy: async params => {
     const { loginUser, id } = params;
 
     if (!loginUser.admin) {
@@ -24,11 +24,8 @@ module.exports = {
         StatusCodes.NOT_FOUND,
       );
     }
+    const response = await userRepository.destroy({ id: user.id });
 
-    params.disabled = true;
-    params.deletedAt = new Date();
-    Object.assign(user, params);
-
-    return userRepository.update(user);
+    return response;
   },
 };

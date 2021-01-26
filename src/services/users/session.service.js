@@ -21,13 +21,6 @@ module.exports = {
       );
     }
 
-    if (user.disabled === true) {
-      throw new ApplicationError(
-        messages.unauthorized('login'),
-        StatusCodes.UNAUTHORIZED,
-      );
-    }
-
     const passwordMatched = await compare(password, user.password);
 
     if (!passwordMatched) {

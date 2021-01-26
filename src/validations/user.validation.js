@@ -29,13 +29,13 @@ const update = {
     admin: yup.boolean(),
   }),
   params: yup.object().shape({
-    id: yup.string().required(),
+    id: yup.string().uuid('id param with invalid uuid').required(),
   }),
 };
 
 const del = {
   params: yup.object().shape({
-    id: yup.string().required(),
+    id: yup.string().uuid('id param with invalid uuid').required(),
   }),
 };
 

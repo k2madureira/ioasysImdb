@@ -1,3 +1,14 @@
 const { StatusCodes } = require('http-status-codes');
 const { catchAsync } = require('../utils');
-const {  } = require('../services');
+const { movieService } = require('../services');
+
+module.exports = {
+  create: catchAsync(async (req, res) => {
+    const { body } = req;
+    body.loginUser = req.user;
+
+    const response = await movieService.get(body);
+
+    return res.status(StatusCodes.CREATED).json(response);
+  }),
+};

@@ -5,7 +5,7 @@ const { ApplicationError } = require('../../utils');
 const { userRepository } = require('../../repositories');
 
 module.exports.get = async (id) => {
-  const user = await userRepository.getById(id);
+  const user = await userRepository.findById(id);
 
   if (!user) {
     throw new ApplicationError(

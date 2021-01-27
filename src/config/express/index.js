@@ -1,4 +1,5 @@
 const express = require('express');
+const { StatusCodes } = require('http-status-codes');
 const { logger, ApplicationError, morgan } = require('../../utils');
 const { messages } = require('../../helpers');
 const { errorTracker, errorHandler } = require('../../middlewares');
@@ -7,7 +8,6 @@ require('dotenv').config();
 const routes = require('../../routes');
 
 const { port, version } = require('../env');
-const { StatusCodes } = require('http-status-codes');
 
 const app = express();
 
@@ -19,11 +19,15 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 app.use(express.json());
-app.use(express.urlencoded({
-  extended: true,
-}));
+app.use(
+  express.urlencoded({
+    extended: true,
+  }),
+);
 
-Object.keys(routes).forEach((key) => app.use(`/api/${version}/${key}`, routes[key]));
+Object.keys(routes).forEach(key =>
+  app.use(`/api/${version}/${key}`, routes[key]),
+);
 
 app.use((req, res, next) => {
   next(new ApplicationError(messages.notFound('route'), StatusCodes.NOT_FOUND));
@@ -32,7 +36,7 @@ app.use((req, res, next) => {
 app.use(errorTracker);
 app.use(errorHandler);
 
-const unexpectedErrorCatcher = (error) => {
+const unexpectedErrorCatcher = error => {
   logger.error(error);
   process.exit(1);
 };

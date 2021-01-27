@@ -9,7 +9,7 @@ module.exports = {
 
     const response = await userService.create(body);
 
-    return res.json(response);
+    return res.status(StatusCodes.CREATED).json(response);
   }),
 
   update: catchAsync(async (req, res) => {
@@ -21,7 +21,7 @@ module.exports = {
 
     const response = await userService.update(body, idUpdatedUser);
 
-    return res.json(response);
+    return res.status(StatusCodes.OK).json(response);
   }),
 
   delete: catchAsync(async (req, res) => {

@@ -2,18 +2,19 @@ const dotenv = require('dotenv');
 const path = require('path');
 
 dotenv.config({
-  path: process.env.NODE_ENV === 'test'
-    ? path.join(__dirname, '../../../.env.test')
-    : path.join(__dirname, '../../../.env'),
+  path: path.join(__dirname, '../../../.env'),
 });
 
 module.exports = {
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
-  database: process.env.NODE_ENV !== 'test' ? process.env.DB_NAME : `${process.env.DB_NAME}-test`,
+  database:
+    process.env.NODE_ENV !== 'test'
+      ? process.env.DB_NAME
+      : `${process.env.DB_NAME}-test`,
   host: process.env.DB_HOST,
   dialect: 'postgres',
-  port:process.env.DB_PORT,
+  port: process.env.DB_PORT,
   define: {
     timestamps: true,
   },

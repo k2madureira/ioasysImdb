@@ -25,7 +25,7 @@ module.exports = {
 
     if (!passwordMatched) {
       throw new ApplicationError(
-        messages.invalidPassword(),
+        messages.invalidPassword,
         StatusCodes.CONFLICT,
       );
     }

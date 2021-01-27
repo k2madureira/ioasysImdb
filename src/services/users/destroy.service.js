@@ -8,7 +8,7 @@ module.exports = {
     const { loginUser, id } = params;
 
     if (!loginUser.admin) {
-      throw new ApplicationError(messages.notAdmin(), StatusCodes.UNAUTHORIZED);
+      throw new ApplicationError(messages.notAdmin, StatusCodes.UNAUTHORIZED);
     }
 
     const user = await userRepository.findById(id);

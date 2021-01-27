@@ -15,7 +15,7 @@ module.exports = {
     } = body;
 
     if (!loginUser.admin && admin === true) {
-      throw new ApplicationError(messages.notAdmin(), StatusCodes.UNAUTHORIZED);
+      throw new ApplicationError(messages.notAdmin, StatusCodes.UNAUTHORIZED);
     }
 
     const user = await userRepository.findById(idUpdatedUser);

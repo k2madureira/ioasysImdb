@@ -7,7 +7,7 @@ module.exports = {
     const { body } = req;
     body.loginUser = req.user;
 
-    const response = await movieService.get(body);
+    const response = await movieService.create(body);
 
     return res.status(StatusCodes.CREATED).json(response);
   }),

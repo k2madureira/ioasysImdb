@@ -6,10 +6,10 @@ const { userRepository } = require('../../repositories');
 
 module.exports = {
   create: async params => {
-    const { email, loginUser, admin } = params;
+    const { email, loginUser, admin = false } = params;
 
     if (!loginUser.admin && admin === true) {
-      throw new ApplicationError(messages.notAdmin(), StatusCodes.UNAUTHORIZED);
+      throw new ApplicationError(messages.notAdmin, StatusCodes.UNAUTHORIZED);
     }
 
     const findUser = await userRepository.findOne({ email });
@@ -21,6 +21,7 @@ module.exports = {
       );
     }
 
+    params.admin = params.admin ? params.admin : false;
     const response = await db.sequelize.transaction(async transaction => {
       const newUser = {
         ...params,

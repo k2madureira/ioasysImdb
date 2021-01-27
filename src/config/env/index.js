@@ -2,9 +2,10 @@ const dotenv = require('dotenv');
 const path = require('path');
 
 dotenv.config({
-  path: process.env.NODE_ENV === 'test'
-    ? path.join(__dirname, '../../../.env.test')
-    : path.join(__dirname, '../../../.env'),
+  path:
+    process.env.NODE_ENV === 'test'
+      ? path.join(__dirname, '../../../.env.test')
+      : path.join(__dirname, '../../../.env'),
 });
 
 module.exports = {
@@ -15,7 +16,7 @@ module.exports = {
   secret: process.env.JWT_SECRET,
   accessTokenExpiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN,
   refreshTokenExpiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN,
-  resetTokenExpiresIn: process.env.RESET_TOKEN_EXPIRES_IN,
+  resetTokenExpiresIn: process.env.JWT_EXPIRESIN,
   urlToS3: process.env.URL,
   corsOptions: {
     origin: '*',

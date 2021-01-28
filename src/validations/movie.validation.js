@@ -17,7 +17,22 @@ const create = {
   }),
 };
 
+const update = {
+  body: yup.object().shape({
+    tt: yup.string(),
+    title: yup.string(),
+    year: yup.string(),
+    director: yup.string(),
+    genre: yup.string(),
+    actors: yup.string(),
+  }),
+  params: yup.object().shape({
+    id: yup.string().uuid('id param with invalid uuid').required(),
+  }),
+};
+
 module.exports.movies = {
   get,
   create,
+  update,
 };

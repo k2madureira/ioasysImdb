@@ -11,4 +11,13 @@ module.exports = {
 
     return res.status(StatusCodes.CREATED).json(response);
   }),
+
+  update: catchAsync(async (req, res) => {
+    const { body, params } = req;
+    body.loginUser = req.user;
+
+    const response = await movieService.update(body, params);
+
+    return res.status(StatusCodes.OK).json(response);
+  }),
 };

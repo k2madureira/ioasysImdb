@@ -23,8 +23,6 @@ beforeAll(async () => {
 
   token = admin.body.token;
   userToken = user.body.token;
-
-
 });
 
 describe('\n * User Endpoints', () => {
@@ -38,24 +36,20 @@ describe('\n * User Endpoints', () => {
     });
 
     it('Should not be able to log in with wrong Email, return 404 - Not Found', async () => {
-     
       const login = await request(app)
         .post(`${baseURL}/login`)
         .send({ email: 'ERROR@ERROR.com', password: '123' });
 
-        
       expect(login.status).toBe(StatusCodes.NOT_FOUND);
     });
 
     it('Should not be able to log in with wrong Password, return 409 - Conflict', async () => {
-     
       const login = await request(app)
         .post(`${baseURL}/login`)
         .send({ email: 'adm@adm.com', password: 'ERROR' });
 
       expect(login.status).toBe(StatusCodes.CONFLICT);
     });
-    
   });
 
   describe('\n => POST /users/', () => {
@@ -73,11 +67,9 @@ describe('\n * User Endpoints', () => {
         .set('Authorization', `Bearer ${token}`)
         .send(sampleUser);
 
-    
       sampleUserResponse = user.body;
 
       expect(user.status).toBe(StatusCodes.CREATED);
-
     });
 
     it('Should not be able create a new user without fields, return 400 - Bad request', async () => {
@@ -94,18 +86,15 @@ describe('\n * User Endpoints', () => {
         .send(sample);
 
       expect(user.status).toBe(StatusCodes.BAD_REQUEST);
-
     });
 
     it('Should not be able create a new user with same email, return 409 - Conflict', async () => {
-    
       const user = await request(app)
         .post(`${baseURL}/`)
         .set('Authorization', `Bearer ${token}`)
         .send(sampleUser);
 
       expect(user.status).toBe(StatusCodes.CONFLICT);
-
     });
 
     it('Should not be able create a new admin if user is not admin, return 401 - Unauthorized', async () => {
@@ -115,20 +104,18 @@ describe('\n * User Endpoints', () => {
         .set('Authorization', `Bearer ${userToken}`)
         .send(sampleUser);
 
-        sampleUser.admin = false;
+      sampleUser.admin = false;
       expect(user.status).toBe(StatusCodes.UNAUTHORIZED);
-
     });
   });
 
   describe('\n => (PUT/PATCH) /users/:id', () => {
     it('Should be able update a user, return 200 - Ok', async () => {
-      
       sampleUser.name = faker.name.findName();
       sampleUser.nickname = faker.name.lastName();
       delete sampleUser.password;
 
-      const id = sampleUserResponse.id;
+      const { id } = sampleUserResponse;
 
       const user = await request(app)
         .put(`${baseURL}/${id}`)
@@ -139,11 +126,9 @@ describe('\n * User Endpoints', () => {
       sampleUserResponse = user.body;
 
       expect(user.status).toBe(StatusCodes.OK);
-
     });
 
     it('Should not be able update a user with wrong id, return 404 - Not found', async () => {
-      
       const errorId = 'fe936e37-f4c6-4f8b-adfb-2873ac891efd';
 
       const user = await request(app)
@@ -151,13 +136,10 @@ describe('\n * User Endpoints', () => {
         .set('Authorization', `Bearer ${token}`)
         .send(sampleUser);
 
-
       expect(user.status).toBe(StatusCodes.NOT_FOUND);
-
     });
 
     it('Should not be able update a user with wrong UUID format, return 400 - Bad request', async () => {
-      
       const errorId = 'e936e37-f4c6-4f8b-adfb-2873ac891efd';
 
       const user = await request(app)
@@ -165,14 +147,11 @@ describe('\n * User Endpoints', () => {
         .set('Authorization', `Bearer ${token}`)
         .send(sampleUser);
 
-
       expect(user.status).toBe(StatusCodes.BAD_REQUEST);
-
     });
 
     it('Should not be able update a admin if user is not admin, return 401 - Unauthorized', async () => {
-      
-      const id = sampleUserResponse.id;
+      const { id } = sampleUserResponse;
       sampleUser.admin = true;
 
       const user = await request(app)
@@ -180,18 +159,13 @@ describe('\n * User Endpoints', () => {
         .set('Authorization', `Bearer ${userToken}`)
         .send(sampleUser);
 
-        sampleUser.admin = false;
+      sampleUser.admin = false;
       expect(user.status).toBe(StatusCodes.UNAUTHORIZED);
-
     });
-
   });
 
-
   describe('\n => (DELETE) /users/:id', () => {
-
     it('Should not be able delete a user with wrong id, return 404 - Not found', async () => {
-      
       const errorId = 'fe936e37-f4c6-4f8b-adfb-2873ac891efd';
 
       const user = await request(app)
@@ -199,13 +173,10 @@ describe('\n * User Endpoints', () => {
         .set('Authorization', `Bearer ${token}`)
         .send(sampleUser);
 
-
       expect(user.status).toBe(StatusCodes.NOT_FOUND);
-
     });
 
     it('Should not be able delete a user with wrong UUID format, return 400 - Bad request', async () => {
-      
       const errorId = 'e936e37-f4c6-4f8b-adfb-2873ac891efd';
 
       const user = await request(app)
@@ -213,28 +184,22 @@ describe('\n * User Endpoints', () => {
         .set('Authorization', `Bearer ${token}`)
         .send(sampleUser);
 
-
       expect(user.status).toBe(StatusCodes.BAD_REQUEST);
-
     });
 
     it('Should not be able delete a user if not admin, return 401 - Unauthorized', async () => {
-      
-      const id = sampleUserResponse.id;
-      
+      const { id } = sampleUserResponse;
+
       const user = await request(app)
         .delete(`${baseURL}/${id}`)
         .set('Authorization', `Bearer ${userToken}`)
         .send(sampleUser);
 
-        
       expect(user.status).toBe(StatusCodes.UNAUTHORIZED);
-
     });
 
     it('Should be able delete a user, return 200 - Ok', async () => {
-      
-      const id = sampleUserResponse.id;
+      const { id } = sampleUserResponse;
 
       const user = await request(app)
         .delete(`${baseURL}/${id}`)
@@ -242,9 +207,6 @@ describe('\n * User Endpoints', () => {
         .send(sampleUser);
 
       expect(user.status).toBe(StatusCodes.OK);
-
     });
   });
-
-
 });

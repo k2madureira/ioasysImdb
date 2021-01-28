@@ -3,6 +3,14 @@ const { catchAsync } = require('../utils');
 const { movieService } = require('../services');
 
 module.exports = {
+  get: catchAsync(async (req, res) => {
+    const { tt } = req.params;
+
+    const movie = await movieService.get(tt);
+
+    return res.status(StatusCodes.OK).json(movie);
+  }),
+
   create: catchAsync(async (req, res) => {
     const { body } = req;
     body.loginUser = req.user;

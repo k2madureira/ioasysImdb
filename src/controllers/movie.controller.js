@@ -4,9 +4,9 @@ const { movieService } = require('../services');
 
 module.exports = {
   detail: catchAsync(async (req, res) => {
-    const { tt } = req.params;
+    const { id } = req.params;
 
-    const movie = await movieService.detail(tt);
+    const movie = await movieService.detail(id);
 
     return res.status(StatusCodes.OK).json(movie);
   }),

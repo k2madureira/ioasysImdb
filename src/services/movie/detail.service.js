@@ -4,8 +4,8 @@ const { messages } = require('../../helpers');
 const { ApplicationError } = require('../../utils');
 const { movieRepository } = require('../../repositories');
 
-module.exports.detail = async tt => {
-  const movie = movieRepository.findOne({ tt });
+module.exports.detail = async id => {
+  const movie = movieRepository.findOne({ id });
 
   if (!movie) {
     throw new ApplicationError(

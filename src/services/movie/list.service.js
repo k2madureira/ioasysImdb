@@ -19,16 +19,14 @@ module.exports.list = async (title, page, limit) => {
     }
   }
 
-  const pagination = {
-    movies: movies.length,
-    limit,
-    totalPages: totalPage,
-    currentPage: page,
-  };
-
   const response = {
     movies: result,
-    pagination,
+    pagination: {
+      movies: movies.length,
+      limit,
+      totalPages: totalPage,
+      currentPage: page,
+    },
   };
 
   return response;

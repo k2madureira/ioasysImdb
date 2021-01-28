@@ -1,10 +1,12 @@
-const { get } = require('./get.service');
+const { detail } = require('./detail.service');
+const { list } = require('./list.service');
 const { create } = require('./create.service');
 const { update } = require('./update.service');
 const { destroy } = require('./destroy.service');
 
 module.exports = {
-  get,
+  detail,
+  list,
   create,
   update,
   destroy,

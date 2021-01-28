@@ -4,7 +4,7 @@ const { messages } = require('../../helpers');
 const { ApplicationError } = require('../../utils');
 const { movieRepository } = require('../../repositories');
 
-module.exports.get = async tt => {
+module.exports.detail = async tt => {
   const movie = movieRepository.findOne({ tt });
 
   if (!movie) {

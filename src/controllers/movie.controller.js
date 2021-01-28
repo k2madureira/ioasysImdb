@@ -12,8 +12,8 @@ module.exports = {
   }),
 
   list: catchAsync(async (req, res) => {
-    const { title = '' } = req.query;
-    const movies = await movieService.list(title);
+    const { title = '', page = 1, limit = 10 } = req.query;
+    const movies = await movieService.list(title, page, limit);
 
     return res.status(StatusCodes.OK).json(movies);
   }),

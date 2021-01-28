@@ -4,8 +4,8 @@ const { messages } = require('../../helpers');
 const { ApplicationError } = require('../../utils');
 const { movieRepository } = require('../../repositories');
 
-module.exports.get = async id => {
-  const movie = movieRepository.findById(id);
+module.exports.detail = async id => {
+  const movie = movieRepository.findOne({ id });
 
   if (!movie) {
     throw new ApplicationError(

@@ -11,7 +11,7 @@ const {
 } = require('../validations');
 
 router.get('/', ensureAuthenticated.auth, movieController.list);
-router.get('/detail/:id', ensureAuthenticated.auth, movieController.detail);
+router.get('/:id', ensureAuthenticated.auth, movieController.detail);
 
 router.use(ensureAuthenticated.auth, ensureAdmin.admin);
 router.post('/', validate(movies.create), movieController.create);

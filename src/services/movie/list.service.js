@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const { Op } = require('sequelize');
 const { movieRepository } = require('../../repositories');
 

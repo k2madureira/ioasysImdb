@@ -4,7 +4,7 @@ const { ApplicationError } = require('../../utils');
 const { movieRepository } = require('../../repositories');
 
 module.exports = {
-  update: async (body, id) => {
+  destroy: async id => {
     const movie = await movieRepository.findById(id);
 
     if (!movie) {
@@ -14,9 +14,7 @@ module.exports = {
       );
     }
 
-    Object.assign(movie, body);
-
-    const response = await movieRepository.update(movie);
+    const response = await movieRepository.destroy({ id });
     return response;
   },
 };

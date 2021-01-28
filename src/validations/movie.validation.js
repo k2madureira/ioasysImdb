@@ -31,8 +31,15 @@ const update = {
   }),
 };
 
+const del = {
+  params: yup.object().shape({
+    id: yup.string().uuid('id param with invalid uuid').required(),
+  }),
+};
+
 module.exports.movies = {
   get,
   create,
   update,
+  del,
 };

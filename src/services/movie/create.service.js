@@ -13,7 +13,7 @@ module.exports = {
 
     if (findMovie) {
       throw new ApplicationError(
-        messages.alreadyExists('movie'),
+        messages.alreadyExists('tt movie'),
         StatusCodes.CONFLICT,
       );
     }

@@ -16,8 +16,18 @@ module.exports = {
     const { body, params } = req;
     body.loginUser = req.user;
 
-    const response = await movieService.update(body, params);
+    const response = await movieService.update(body, params.id);
 
     return res.status(StatusCodes.OK).json(response);
+  }),
+
+  delete: catchAsync(async (req, res) => {
+    const { id } = req.params;
+
+    await movieService.destroy(id);
+
+    return res.status(StatusCodes.OK).json({
+      message: 'Movie deleted with success.',
+    });
   }),
 };

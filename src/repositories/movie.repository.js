@@ -6,4 +6,5 @@ module.exports = {
   findById: id => Movie.findByPk(id),
   create: params => Movie.create(params),
   update: movie => movie.save(),
+  destroy: params => Movie.destroy({ where: params }),
 };

@@ -37,9 +37,17 @@ const del = {
   }),
 };
 
+const list = {
+  query: yup.object().shape({
+    limit: yup.number(),
+    page: yup.number(),
+  }),
+};
+
 module.exports.movies = {
   get,
   create,
   update,
   del,
+  list,
 };

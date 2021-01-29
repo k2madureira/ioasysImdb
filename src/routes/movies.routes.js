@@ -10,7 +10,12 @@ const {
   validationSchemas: { movies },
 } = require('../validations');
 
-router.get('/', ensureAuthenticated.auth, movieController.list);
+router.get(
+  '/',
+  validate(movies.list),
+  ensureAuthenticated.auth,
+  movieController.list,
+);
 router.get('/:id', ensureAuthenticated.auth, movieController.detail);
 
 router.use(ensureAuthenticated.auth, ensureAdmin.admin);

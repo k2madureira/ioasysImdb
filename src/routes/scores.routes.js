@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { sessionController } = require('../controllers');
+const { scoreController } = require('../controllers');
 const { ensureAuthenticated, validate } = require('../middlewares');
 
 const {
@@ -7,6 +7,6 @@ const {
 } = require('../validations');
 
 router.use(ensureAuthenticated.auth);
-router.get('/:id', validate(scores.create), sessionController.create);
+router.post('/:id', validate(scores.create), scoreController.create);
 
-module.exports.movies = router;
+module.exports.scores = router;

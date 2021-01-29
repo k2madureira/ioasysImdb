@@ -5,7 +5,7 @@ const { scoreService } = require('../services');
 module.exports = {
   create: catchAsync(async (req, res) => {
     const { id } = req.params;
-    const { score } = request.body;
+    const { score } = req.body;
 
     const params = {
       id,
@@ -14,6 +14,6 @@ module.exports = {
 
     const response = await scoreService.create(params);
 
-    return res.status(StatusCodes.OK).json(response);
+    return res.status(StatusCodes.CREATED).json(response);
   }),
 };

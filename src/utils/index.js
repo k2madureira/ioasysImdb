@@ -3,6 +3,7 @@ const { catchAsync } = require('./catchAsync');
 const { ApplicationError } = require('./ApplicationError');
 const { morgan } = require('./morgan');
 const { jwt } = require('./jsonwebtoken');
+const { pagination } = require('./pagination');
 
 module.exports = {
   logger,
@@ -10,4 +11,5 @@ module.exports = {
   ApplicationError,
   morgan,
   jwt,
+  pagination,
 };

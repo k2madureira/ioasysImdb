@@ -17,7 +17,7 @@ module.exports = {
     if (!findMovie) {
       throw new ApplicationError(
         messages.notFound('movie'),
-        StatusCodes.CONFLICT,
+        StatusCodes.NOT_FOUND,
       );
     }
 

@@ -47,5 +47,11 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
+  Movie.associate = function associate(models) {
+    models.Movie.hasMany(models.Score, {
+      as: 'scores',
+      foreignKey: 'movie_id',
+    });
+  };
   return Movie;
 };

@@ -2,7 +2,8 @@ const { Movie } = require('../models');
 
 module.exports = {
   find: (params = '', limit = 10, page = 0) =>
-    Movie.findAll({ where: params, limit, offset: page }),
+    Movie.findAndCountAll({ where: params, limit, offset: page }),
+  findAll: (params = '') => Movie.findAll({ where: params }),
   findOne: (params = '') => Movie.findOne({ where: params }),
   findById: id => Movie.findByPk(id),
   create: params => Movie.create(params),

@@ -3,15 +3,15 @@ module.exports.pagination = (page, limit, arr, origin) => {
   const arrTitle = [origin, 'pagination'];
 
   const totalPage = Math.ceil(arr.length / limit);
-  let count = page * limit - limit;
-  const delimiter = count + limit;
+  let c = page * limit - limit;
+  const delimiter = c + limit;
 
   if (page <= totalPage) {
-    for (let i = count; i < delimiter; i += 1) {
+    for (let i = c; i < delimiter; i += 1) {
       if (arr[i] !== undefined) {
         result.push(arr[i]);
       }
-      count += 1;
+      c += 1;
     }
   }
 

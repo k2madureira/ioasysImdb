@@ -1,22 +1,14 @@
 module.exports.pagination = (page, limit, arr, origin) => {
-  const result = [];
   const arrTitle = [origin, 'pagination'];
 
   const totalPage = Math.ceil(arr.length / limit);
-  let count = page * limit - limit;
-  const delimiter = count + limit;
-
-  if (page <= totalPage) {
-    for (let i = count; i < delimiter; i += 1) {
-      if (arr[i] !== undefined) {
-        result.push(arr[i]);
-      }
-      count += 1;
-    }
-  }
+  page = page === 0 ? 1 : page;
+  const start = page * limit - limit;
+  const end = start + limit;
+  const slice = arr.slice(start, end);
 
   const response = {
-    0: result,
+    0: slice,
     1: {
       movies: arr.length,
       limit,

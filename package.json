@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start:dev": "NODE_ENV=development nodemon app.js",
+    "db:generate": "NODE_ENV=development sequelize migration:generate",
     "db:migrate": "NODE_ENV=development sequelize db:migrate",
     "db:undo": "NODE_ENV=development sequelize db:migrate:undo",
     "test": "jest",

@@ -40,7 +40,6 @@ module.exports = {
       return score;
     });
 
-    // const response = findMovie;
     return response;
   },
 };

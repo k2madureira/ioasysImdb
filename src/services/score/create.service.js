@@ -1,14 +1,18 @@
 const { StatusCodes } = require('http-status-codes');
 const { messages } = require('../../helpers');
 const { ApplicationError } = require('../../utils');
-const { movieRepository } = require('../../repositories');
+const { movieRepository, scoreRepository } = require('../../repositories');
 
 const db = require('../../models');
 
 module.exports = {
   create: async params => {
-    const { id } = params;
+    const { id, loginUser } = params;
     const findMovie = await movieRepository.findOne({ id });
+    const findUserScore = await scoreRepository.find({
+      user_id: loginUser.id,
+      movie_id: id,
+    });
 
     if (!findMovie) {
       throw new ApplicationError(
@@ -16,14 +20,27 @@ module.exports = {
         StatusCodes.CONFLICT,
       );
     }
-    /*
-    const r = await db.sequelize.transaction(async transaction => {
-      const newScore = {
-        ...params,
-      };
-    }); */
 
-    const response = findMovie;
+    if (findUserScore) {
+      throw new ApplicationError(
+        messages.alreadyExists('your vote'),
+        StatusCodes.CONFLICT,
+      );
+    }
+
+    const response = await db.sequelize.transaction(async transaction => {
+      const newScore = {
+        user_id: loginUser.id,
+        movie_id: id,
+        score: params.score,
+      };
+
+      const score = await scoreRepository.create(newScore, transaction);
+
+      return score;
+    });
+
+    // const response = findMovie;
     return response;
   },
 };

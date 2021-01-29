@@ -9,6 +9,7 @@ module.exports = {
 
     const params = {
       id,
+      loginUser: req.user,
       score,
     };
 

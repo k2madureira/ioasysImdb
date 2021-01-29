@@ -40,7 +40,7 @@ const del = {
 const list = {
   query: yup.object().shape({
     limit: yup.number(),
-    page: yup.number(),
+    page: yup.number().positive().min(1),
   }),
 };
 

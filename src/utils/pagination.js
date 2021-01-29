@@ -1,7 +1,7 @@
 module.exports.pagination = (page, limit, arr, origin) => {
   const result = [];
-  const arrTitle = [origin];
-  const countKey = 0;
+  const arrTitle = [origin, 'pagination'];
+
   const totalPage = Math.ceil(arr.length / limit);
   let count = page * limit - limit;
   const delimiter = count + limit;
@@ -17,7 +17,7 @@ module.exports.pagination = (page, limit, arr, origin) => {
 
   const response = {
     0: result,
-    pagination: {
+    1: {
       movies: arr.length,
       limit,
       totalPages: totalPage,
@@ -26,11 +26,9 @@ module.exports.pagination = (page, limit, arr, origin) => {
   };
 
   Object.keys(response).forEach(key => {
-    if (countKey === 0) {
-      const newKey = arrTitle[key];
-      response[newKey] = response[key];
-      delete response[key];
-    }
+    const newKey = arrTitle[key];
+    response[newKey] = response[key];
+    delete response[key];
   });
 
   return response;

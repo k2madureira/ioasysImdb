@@ -3,7 +3,7 @@ const { messages } = require('../../helpers');
 const { ApplicationError } = require('../../utils');
 const { movieRepository } = require('../../repositories');
 
-// const db = require('../../models');
+const db = require('../../models');
 
 module.exports = {
   create: async params => {
@@ -16,6 +16,12 @@ module.exports = {
         StatusCodes.CONFLICT,
       );
     }
+    /*
+    const r = await db.sequelize.transaction(async transaction => {
+      const newScore = {
+        ...params,
+      };
+    }); */
 
     const response = findMovie;
     return response;

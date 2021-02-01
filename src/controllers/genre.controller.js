@@ -24,4 +24,14 @@ module.exports = {
 
     return res.status(StatusCodes.OK).json(response);
   }),
+
+  delete: catchAsync(async (req, res) => {
+    const { id } = req.params;
+
+    await genreService.destroy(id);
+
+    return res.status(StatusCodes.OK).json({
+      message: 'Genre deleted with success.',
+    });
+  }),
 };

@@ -14,7 +14,14 @@ const update = {
     id: yup.string().uuid('id param with invalid uuid').required(),
   }),
 };
+
+const del = {
+  params: yup.object().shape({
+    id: yup.string().uuid('id param with invalid uuid').required(),
+  }),
+};
 module.exports.genres = {
   create,
   update,
+  del,
 };

@@ -9,7 +9,7 @@ module.exports = {
   create: async params => {
     const { id, loginUser } = params;
     const findMovie = await movieRepository.findOne({ id });
-    const findUserScore = await scoreRepository.find({
+    const findUserScore = await scoreRepository.findOne({
       user_id: loginUser.id,
       movie_id: id,
     });

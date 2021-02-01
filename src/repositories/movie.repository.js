@@ -1,15 +1,23 @@
-const { Movie } = require('../models');
+const { Movie, Score } = require('../models');
 
 module.exports = {
-  find: (params = '', limit = 10, page = 0) =>
+  find: (query = '', attributes = [], limit = 10, page = 0) =>
     Movie.findAndCountAll({
-      where: params,
+      where: query,
+      attributes,
+      include: [{ as: 'scores', model: Score }],
       limit,
       offset: limit * page,
     }),
-  findAll: (params = '') => Movie.findAll({ where: params }),
-  findOne: (params = '') => Movie.findOne({ where: params }),
+  findAll: (query = '') => Movie.findAll({ where: query }),
+  findOne: (query = '') => Movie.findOne({ where: query }),
   findById: id => Movie.findByPk(id),
+  findScores: (query = '', attributes = []) =>
+    Movie.findOne({
+      where: query,
+      attributes,
+      include: [{ as: 'scores', model: Score }],
+    }),
   create: params => Movie.create(params),
   update: movie => movie.save(),
   destroy: params => Movie.destroy({ where: params }),

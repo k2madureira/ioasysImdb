@@ -9,7 +9,9 @@ const db = require('../../models');
 module.exports = {
   create: async params => {
     const { genre } = params;
-    const findGenre = await genreRepository.findOne({ genre });
+    const treatedGenre = genre.toLowerCase().trim();
+
+    const findGenre = await genreRepository.findOne({ genre: treatedGenre });
 
     if (findGenre) {
       throw new ApplicationError(
@@ -20,7 +22,7 @@ module.exports = {
 
     const response = await db.sequelize.transaction(async transaction => {
       const newGenre = {
-        ...params,
+        genre: treatedGenre,
       };
 
       return genreRepository.create(newGenre, transaction);

@@ -15,4 +15,13 @@ module.exports = {
 
     return res.status(StatusCodes.CREATED).json(response);
   }),
+
+  update: catchAsync(async (req, res) => {
+    const { body, params } = req;
+    body.loginUser = req.user;
+
+    const response = await genreService.update(body, params.id);
+
+    return res.status(StatusCodes.OK).json(response);
+  }),
 };

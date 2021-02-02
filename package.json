@@ -12,6 +12,7 @@
     "db:undo": "NODE_ENV=development sequelize db:migrate:undo",
     "test": "jest",
     "test:user": "NODE_ENV=test jest src/tests/integration/users.test.js",
+    "test:movie": "NODE_ENV=test jest src/tests/integration/movies.test.js",
     "pretest": "NODE_ENV=test sequelize db:create && NODE_ENV=test sequelize db:migrate && NODE_ENV=test sequelize db:seed:all",
     "posttest": "NODE_ENV=test sequelize db:drop"
   },

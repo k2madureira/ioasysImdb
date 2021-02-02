@@ -48,141 +48,151 @@ describe('\n * User Endpoints', () => {
       expect(movie.status).toBe(StatusCodes.CREATED);
     });
 
-    /* it('Should not be able create a new user without fields, return 400 - Bad request', async () => {
+    it('Should not be able create a new movie without fields, return 400 - Bad request', async () => {
       const sample = {
-        name: faker.name.findName(),
-        nickname: faker.name.lastName(),
-        password: 'P@SSW0RD',
-        admin: false,
+        title: faker.name.title(),
+        year: '2021',
+        director: faker.name.firstName(),
+        genre: faker.name.title(),
+        actors: faker.name.title(),
       };
 
-      const user = await request(app)
+      const movie = await request(app)
         .post(`${baseURL}/`)
         .set('Authorization', `Bearer ${token}`)
         .send(sample);
 
-      expect(user.status).toBe(StatusCodes.BAD_REQUEST);
+      expect(movie.status).toBe(StatusCodes.BAD_REQUEST);
     });
 
-    it('Should not be able create a new user with same email, return 409 - Conflict', async () => {
-      const user = await request(app)
+    it('Should not be able create a new movie with same tt, return 409 - Conflict', async () => {
+      const movie = await request(app)
         .post(`${baseURL}/`)
         .set('Authorization', `Bearer ${token}`)
-        .send(sampleUser);
+        .send(sampleMovie);
 
-      expect(user.status).toBe(StatusCodes.CONFLICT);
+      expect(movie.status).toBe(StatusCodes.CONFLICT);
     });
 
-    it('Should not be able create a new admin if user is not admin, return 401 - Unauthorized', async () => {
-      sampleUser.admin = true;
+    it('Should not be able create a new movie if user is not admin, return 401 - Unauthorized', async () => {
       const user = await request(app)
         .post(`${baseURL}/`)
         .set('Authorization', `Bearer ${userToken}`)
-        .send(sampleUser);
+        .send(sampleMovie);
 
-      sampleUser.admin = false;
-      expect(user.status).toBe(StatusCodes.UNAUTHORIZED);
-    }); */
-  });
-  /*
-  describe('\n => (PUT/PATCH) /users/:id', () => {
-    it('Should be able update a user, return 200 - Ok', async () => {
-      sampleUser.name = faker.name.findName();
-      sampleUser.nickname = faker.name.lastName();
-      delete sampleUser.password;
-
-      const { id } = sampleUserResponse;
-
-      const user = await request(app)
-        .put(`${baseURL}/${id}`)
-        .set('Authorization', `Bearer ${token}`)
-        .send(sampleUser);
-
-      sampleUser.password = 'P@SSW0RD';
-      sampleUserResponse = user.body;
-
-      expect(user.status).toBe(StatusCodes.OK);
-    });
-
-    it('Should not be able update a user with wrong id, return 404 - Not found', async () => {
-      const errorId = 'fe936e37-f4c6-4f8b-adfb-2873ac891efd';
-
-      const user = await request(app)
-        .put(`${baseURL}/${errorId}`)
-        .set('Authorization', `Bearer ${token}`)
-        .send(sampleUser);
-
-      expect(user.status).toBe(StatusCodes.NOT_FOUND);
-    });
-
-    it('Should not be able update a user with wrong UUID format, return 400 - Bad request', async () => {
-      const errorId = 'e936e37-f4c6-4f8b-adfb-2873ac891efd';
-
-      const user = await request(app)
-        .put(`${baseURL}/${errorId}`)
-        .set('Authorization', `Bearer ${token}`)
-        .send(sampleUser);
-
-      expect(user.status).toBe(StatusCodes.BAD_REQUEST);
-    });
-
-    it('Should not be able update a admin if user is not admin, return 401 - Unauthorized', async () => {
-      const { id } = sampleUserResponse;
-      sampleUser.admin = true;
-
-      const user = await request(app)
-        .put(`${baseURL}/${id}`)
-        .set('Authorization', `Bearer ${userToken}`)
-        .send(sampleUser);
-
-      sampleUser.admin = false;
       expect(user.status).toBe(StatusCodes.UNAUTHORIZED);
     });
   });
 
-  describe('\n => (DELETE) /users/:id', () => {
-    it('Should not be able delete a user with wrong id, return 404 - Not found', async () => {
+  describe('\n => (PUT/PATCH) /movies/:id', () => {
+    it('Should be able update a movie, return 200 - Ok', async () => {
+      sampleMovie.director = faker.name.findName();
+      sampleMovie.year = '2020';
+
+      const { id } = sampleMovieResponse;
+
+      const movie = await request(app)
+        .put(`${baseURL}/${id}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send(sampleMovie);
+
+      sampleMovieResponse = movie.body;
+
+      expect(movie.status).toBe(StatusCodes.OK);
+    });
+
+    it('Should not be able update a movie with wrong id, return 404 - Not found', async () => {
       const errorId = 'fe936e37-f4c6-4f8b-adfb-2873ac891efd';
 
-      const user = await request(app)
-        .delete(`${baseURL}/${errorId}`)
+      const movie = await request(app)
+        .put(`${baseURL}/${errorId}`)
         .set('Authorization', `Bearer ${token}`)
-        .send(sampleUser);
+        .send(sampleMovie);
 
-      expect(user.status).toBe(StatusCodes.NOT_FOUND);
+      expect(movie.status).toBe(StatusCodes.NOT_FOUND);
     });
 
-    it('Should not be able delete a user with wrong UUID format, return 400 - Bad request', async () => {
+    it('Should not be able update a movie with wrong UUID format, return 400 - Bad request', async () => {
       const errorId = 'e936e37-f4c6-4f8b-adfb-2873ac891efd';
 
-      const user = await request(app)
-        .delete(`${baseURL}/${errorId}`)
+      const movie = await request(app)
+        .put(`${baseURL}/${errorId}`)
         .set('Authorization', `Bearer ${token}`)
-        .send(sampleUser);
+        .send(sampleMovie);
 
-      expect(user.status).toBe(StatusCodes.BAD_REQUEST);
+      expect(movie.status).toBe(StatusCodes.BAD_REQUEST);
     });
 
-    it('Should not be able delete a user if not admin, return 401 - Unauthorized', async () => {
-      const { id } = sampleUserResponse;
+    it('Should not be able update a movie if user is not admin, return 401 - Unauthorized', async () => {
+      const { id } = sampleMovieResponse;
 
-      const user = await request(app)
-        .delete(`${baseURL}/${id}`)
+      const movie = await request(app)
+        .put(`${baseURL}/${id}`)
         .set('Authorization', `Bearer ${userToken}`)
-        .send(sampleUser);
+        .send(sampleMovie);
 
-      expect(user.status).toBe(StatusCodes.UNAUTHORIZED);
+      expect(movie.status).toBe(StatusCodes.UNAUTHORIZED);
+    });
+  });
+
+  describe('\n (GET) /movies/', () => {
+    it('Should not be able lit movies, return 200 - OK', async () => {
+      const movie = await request(app)
+        .get(`${baseURL}/`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(movie.status).toBe(StatusCodes.OK);
     });
 
-    it('Should be able delete a user, return 200 - Ok', async () => {
-      const { id } = sampleUserResponse;
+    it('Should not be able detail a movie, return 200 - OK', async () => {
+      const { id } = sampleMovieResponse;
+      const movie = await request(app)
+        .get(`${baseURL}/${id}`)
+        .set('Authorization', `Bearer ${token}`);
 
-      const user = await request(app)
+      expect(movie.status).toBe(StatusCodes.OK);
+    });
+  });
+
+  describe('\n => (DELETE) /movies/:id', () => {
+    it('Should not be able delete a movie with wrong id, return 404 - Not found', async () => {
+      const errorId = 'fe936e37-f4c6-4f8b-adfb-2873ac891efd';
+
+      const movie = await request(app)
+        .delete(`${baseURL}/${errorId}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(movie.status).toBe(StatusCodes.NOT_FOUND);
+    });
+
+    it('Should not be able delete a movie with wrong UUID format, return 400 - Bad request', async () => {
+      const errorId = 'e936e37-f4c6-4f8b-adfb-2873ac891efd';
+
+      const movie = await request(app)
+        .delete(`${baseURL}/${errorId}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(movie.status).toBe(StatusCodes.BAD_REQUEST);
+    });
+
+    it('Should not be able delete a movie if not admin, return 401 - Unauthorized', async () => {
+      const { id } = sampleMovieResponse;
+
+      const movie = await request(app)
         .delete(`${baseURL}/${id}`)
-        .set('Authorization', `Bearer ${token}`)
-        .send(sampleUser);
+        .set('Authorization', `Bearer ${userToken}`);
 
-      expect(user.status).toBe(StatusCodes.OK);
+      expect(movie.status).toBe(StatusCodes.UNAUTHORIZED);
     });
-  }); */
+
+    it('Should be able delete a movie, return 200 - Ok', async () => {
+      const { id } = sampleMovieResponse;
+
+      const movie = await request(app)
+        .delete(`${baseURL}/${id}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(movie.status).toBe(StatusCodes.OK);
+    });
+  });
 });

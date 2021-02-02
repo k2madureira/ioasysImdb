@@ -33,5 +33,13 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
+  Genre.associate = function associate(models) {
+    models.Genre.belongsToMany(models.Movie, {
+      through: 'genres_movies',
+      as: 'genres',
+      foreignKey: 'genre_id',
+    });
+  };
+
   return Genre;
 };

@@ -1,9 +1,12 @@
 const { StatusCodes } = require('http-status-codes');
 
-const { response } = require('express');
 const { messages } = require('../../helpers');
 const { ApplicationError } = require('../../utils');
-const { movieRepository, genreRepository } = require('../../repositories');
+const {
+  movieRepository,
+  genreMovieRepository,
+  genreRepository,
+} = require('../../repositories');
 
 const db = require('../../models');
 
@@ -38,11 +41,11 @@ module.exports = {
             movie_id: response.id,
           };
 
-          await genreRepository.create(newGenreMovie, transaction);
+          await genreMovieRepository.create(newGenreMovie, transaction);
         });
       }
     });
 
-    return params;
+    return response;
   },
 };

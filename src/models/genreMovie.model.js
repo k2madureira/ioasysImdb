@@ -31,17 +31,5 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
-  GenreMovie.associate = function associate(models) {
-    models.GenreMovie.belongsTo(models.Movie, {
-      foreignKey: 'movie_id',
-      as: 'movies',
-    });
-
-    models.GenreMovie.belongsTo(models.Genre, {
-      foreignKey: 'genre_id',
-      as: 'genres',
-    });
-  };
-
   return GenreMovie;
 };

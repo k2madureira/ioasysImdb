@@ -12,7 +12,7 @@ const create = {
     title: yup.string(),
     year: yup.string(),
     director: yup.string(),
-    genre: yup.array().required(),
+    genre: yup.array().of(yup.string().uuid()).required(),
     actors: yup.string(),
   }),
 };
@@ -23,7 +23,7 @@ const update = {
     title: yup.string(),
     year: yup.string(),
     director: yup.string(),
-    genre: yup.array(),
+    genre: yup.array().of(yup.string().uuid()),
     actors: yup.string(),
   }),
   params: yup.object().shape({

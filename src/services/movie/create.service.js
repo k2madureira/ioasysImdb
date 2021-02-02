@@ -1,5 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
 
+const { response } = require('express');
 const { messages } = require('../../helpers');
 const { ApplicationError } = require('../../utils');
 const { movieRepository, genreRepository } = require('../../repositories');
@@ -18,20 +19,27 @@ module.exports = {
       );
     }
 
-    /* const response = await db.sequelize.transaction(async transaction => {
+    const response = await db.sequelize.transaction(async transaction => {
       const newMovie = {
         ...params,
       };
 
       const movie = await movieRepository.create(newMovie, transaction);
       return movie;
-    }); */
+    });
 
     genre.forEach(async genreId => {
       const findGenre = await genreRepository.findById(genreId);
 
       if (findGenre) {
-        console.log(findGenre);
+        await db.sequelize.transaction(async transaction => {
+          const newGenreMovie = {
+            genre_id: genreId,
+            movie_id: response.id,
+          };
+
+          await genreRepository.create(newGenreMovie, transaction);
+        });
       }
     });
 

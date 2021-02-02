@@ -10,23 +10,16 @@ const baseMovieURL = `/api/${version}/movies`;
 const baseURL = `/api/${version}/scores`;
 
 let token;
-let userToken;
 let sampleMovie;
 let sampleMovieResponse;
 let sampleScore;
-let sampleScoreResponse;
 
 beforeAll(async () => {
   const admin = await request(app)
     .post(`${baseUserURL}/login`)
     .send({ email: 'adm@adm.com', password: '123' });
 
-  const user = await request(app)
-    .post(`${baseUserURL}/login`)
-    .send({ email: 'user@user.com', password: '123' });
-
   token = admin.body.token;
-  userToken = user.body.token;
 });
 
 describe('\n * Score Endpoints', () => {
@@ -97,6 +90,10 @@ describe('\n * Score Endpoints', () => {
         .post(`${baseURL}/${sampleMovieResponse.id}`)
         .set('Authorization', `Bearer ${token}`)
         .send(sampleScore);
+
+      await request(app)
+        .delete(`${baseMovieURL}/${sampleMovieResponse.id}`)
+        .set('Authorization', `Bearer ${token}`);
 
       expect(score.status).toBe(StatusCodes.CONFLICT);
     });

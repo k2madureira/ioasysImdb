@@ -5,9 +5,7 @@ const { ApplicationError } = require('../../utils');
 const { genreRepository } = require('../../repositories');
 
 module.exports = {
-  update: async (body, id) => {
-    const { genre } = body;
-
+  update: async (genre, id) => {
     const findGenre = await genreRepository.findById(id);
 
     if (!findGenre) {
@@ -17,8 +15,8 @@ module.exports = {
       );
     }
 
-    body.genre = genre.toLowerCase().trim();
-    Object.assign(findGenre, body);
+    genre = genre.toLowerCase().trim();
+    Object.assign(findGenre, { genre });
 
     const response = await genreRepository.update(findGenre);
     return response;

@@ -17,9 +17,10 @@ module.exports = {
   }),
 
   update: catchAsync(async (req, res) => {
-    const { body, params } = req;
+    const { genre } = req.body;
+    const { id } = req.params;
 
-    const response = await genreService.update(body, params.id);
+    const response = await genreService.update(genre, id);
 
     return res.status(StatusCodes.OK).json(response);
   }),

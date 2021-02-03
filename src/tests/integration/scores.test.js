@@ -7,11 +7,14 @@ const { version } = require('../../config/env');
 
 const baseUserURL = `/api/${version}/users`;
 const baseMovieURL = `/api/${version}/movies`;
+const baseGenreURL = `/api/${version}/genres`;
 const baseURL = `/api/${version}/scores`;
 
 let token;
 let sampleMovie;
 let sampleMovieResponse;
+let sampleGenre;
+let sampleGenreResponse;
 let sampleScore;
 
 beforeAll(async () => {
@@ -25,12 +28,22 @@ beforeAll(async () => {
 describe('\n * Score Endpoints', () => {
   describe('\n => POST /scores/', () => {
     it('Should be able create a new score, return 201 - Created', async () => {
+      sampleGenre = {
+        genre: faker.name.title(),
+      };
+
+      const genre = await request(app)
+        .post(`${baseGenreURL}/`)
+        .set('Authorization', `Bearer ${token}`)
+        .send(sampleGenre);
+      sampleGenreResponse = genre.body;
+
       sampleMovie = {
         tt: faker.random.number(),
         title: faker.name.title(),
         year: '2021',
         director: faker.name.firstName(),
-        genre: faker.name.title(),
+        genre: [sampleGenreResponse.id],
         actors: faker.name.title(),
       };
 
@@ -93,6 +106,10 @@ describe('\n * Score Endpoints', () => {
 
       await request(app)
         .delete(`${baseMovieURL}/${sampleMovieResponse.id}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      await request(app)
+        .delete(`${baseGenreURL}/${sampleGenreResponse.id}`)
         .set('Authorization', `Bearer ${token}`);
 
       expect(score.status).toBe(StatusCodes.CONFLICT);

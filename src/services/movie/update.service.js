@@ -53,6 +53,8 @@ module.exports = {
       }
     });
 
-    return findAllGenreMovie;
+    const updatedMovie = await movieRepository.findById(id);
+
+    return updatedMovie;
   },
 };

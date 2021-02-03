@@ -20,8 +20,16 @@ const del = {
     id: yup.string().uuid('id param with invalid uuid').required(),
   }),
 };
+
+const list = {
+  query: yup.object().shape({
+    limit: yup.number(),
+    page: yup.number().positive().min(1),
+  }),
+};
 module.exports.genres = {
   create,
   update,
   del,
+  list,
 };

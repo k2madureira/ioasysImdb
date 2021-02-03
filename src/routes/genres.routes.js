@@ -10,6 +10,13 @@ const {
   validationSchemas: { genres },
 } = require('../validations');
 
+router.get(
+  '/',
+  ensureAuthenticated.auth,
+  validate(genres.list),
+  genreController.list,
+);
+
 router.use(ensureAuthenticated.auth, ensureAdmin.admin);
 router.post('/', validate(genres.create), genreController.create);
 router.patch('/:id', validate(genres.update), genreController.update);

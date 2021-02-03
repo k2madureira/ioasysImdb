@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const Genre = sequelize.define(
-    'Genre',
+  const GenreMovie = sequelize.define(
+    'GenreMovie',
     {
       id: {
         type: DataTypes.UUID,
@@ -8,14 +8,13 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         allowNull: false,
       },
-      genre: {
-        type: DataTypes.STRING,
+      genre_id: {
+        type: DataTypes.UUID,
         allowNull: false,
       },
-      deletedAt: {
-        type: DataTypes.DATE,
-        allowNull: true,
-        defaultValue: null,
+      movie_id: {
+        type: DataTypes.UUID,
+        allowNull: false,
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -27,19 +26,10 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      tableName: 'genres',
+      tableName: 'genres_movies',
       underscored: true,
-      paranoid: true,
     },
   );
 
-  Genre.associate = function associate(models) {
-    models.Genre.belongsToMany(models.Movie, {
-      through: 'genres_movies',
-      as: 'genres',
-      foreignKey: 'genre_id',
-    });
-  };
-
-  return Genre;
+  return GenreMovie;
 };

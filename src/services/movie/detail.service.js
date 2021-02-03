@@ -6,15 +6,7 @@ const { movieRepository } = require('../../repositories');
 
 module.exports.detail = async id => {
   const query = { id };
-  const attributes = [
-    'id',
-    'tt',
-    'title',
-    'year',
-    'director',
-    'genre',
-    'actors',
-  ];
+  const attributes = ['id', 'tt', 'title', 'year', 'director', 'actors'];
 
   const movie = await movieRepository.findScores(query, attributes);
 

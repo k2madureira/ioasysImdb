@@ -24,10 +24,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      genre: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
       actors: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -52,6 +48,12 @@ module.exports = (sequelize, DataTypes) => {
       as: 'scores',
       foreignKey: 'movie_id',
     });
+    models.Movie.belongsToMany(models.Genre, {
+      through: 'genres_movies',
+      as: 'genres',
+      foreignKey: 'movie_id',
+    });
   };
+
   return Movie;
 };

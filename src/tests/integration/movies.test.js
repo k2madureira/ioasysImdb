@@ -6,10 +6,13 @@ const app = require('../../config/express');
 const { version } = require('../../config/env');
 
 const baseUserURL = `/api/${version}/users`;
+const baseGenreURL = `/api/${version}/genres`;
 const baseURL = `/api/${version}/movies`;
 
 let token;
 let userToken;
+let sampleGenre;
+let sampleGenreResponse;
 let sampleMovie;
 let sampleMovieResponse;
 
@@ -26,15 +29,25 @@ beforeAll(async () => {
   userToken = user.body.token;
 });
 
-describe('\n * User Endpoints', () => {
+describe('\n * Movie Endpoints', () => {
   describe('\n => POST /movies/', () => {
     it('Should be able create a new movie, return 201 - Created', async () => {
+      sampleGenre = {
+        genre: faker.name.title(),
+      };
+
+      const genre = await request(app)
+        .post(`${baseGenreURL}/`)
+        .set('Authorization', `Bearer ${token}`)
+        .send(sampleGenre);
+      sampleGenreResponse = genre.body;
+
       sampleMovie = {
         tt: faker.random.number(),
         title: faker.name.title(),
         year: '2021',
         director: faker.name.firstName(),
-        genre: faker.name.title(),
+        genre: [sampleGenreResponse.id],
         actors: faker.name.title(),
       };
 
@@ -135,7 +148,7 @@ describe('\n * User Endpoints', () => {
     });
   });
 
-  describe('\n (GET) /movies/', () => {
+  describe('\n => (GET) /movies/', () => {
     it('Should not be able lit movies, return 200 - OK', async () => {
       const movie = await request(app)
         .get(`${baseURL}/`)
@@ -190,6 +203,10 @@ describe('\n * User Endpoints', () => {
 
       const movie = await request(app)
         .delete(`${baseURL}/${id}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      await request(app)
+        .delete(`${baseGenreURL}/${sampleGenreResponse.id}`)
         .set('Authorization', `Bearer ${token}`);
 
       expect(movie.status).toBe(StatusCodes.OK);

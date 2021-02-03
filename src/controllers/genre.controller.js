@@ -3,6 +3,13 @@ const { catchAsync } = require('../utils');
 const { genreService } = require('../services');
 
 module.exports = {
+  list: catchAsync(async (req, res) => {
+    const { genre = '', page = 1, limit = 10 } = req.query;
+    const movies = await genreService.list(genre, page, limit);
+
+    return res.status(StatusCodes.OK).json(movies);
+  }),
+
   create: catchAsync(async (req, res) => {
     const { genre } = req.body;
 

@@ -12,12 +12,14 @@ module.exports.list = async (title, page, limit) => {
     limit,
     pageQuery,
   );
-  const totalPage = Math.ceil(movies.count / limit);
+
+  const totalMovies = movies.rows.length;
+  const totalPage = Math.ceil(totalMovies / limit);
 
   const response = {
     movies: movies.rows,
     pagination: {
-      movies: movies.count,
+      movies: totalMovies,
       limit,
       totalPages: totalPage,
       currentPage: page,

@@ -122,65 +122,56 @@ describe('\n * Genre Endpoints', () => {
       expect(genre.status).toBe(StatusCodes.UNAUTHORIZED);
     });
   });
-  /*
-  describe('\n (GET) /movies/', () => {
-    it('Should not be able lit movies, return 200 - OK', async () => {
-      const movie = await request(app)
+
+  describe('\n => (GET) /genres/', () => {
+    it('Should not be able lit genres, return 200 - OK', async () => {
+      const genre = await request(app)
         .get(`${baseURL}/`)
         .set('Authorization', `Bearer ${token}`);
 
-      expect(movie.status).toBe(StatusCodes.OK);
-    });
-
-    it('Should not be able detail a movie, return 200 - OK', async () => {
-      const { id } = sampleGenreResponse;
-      const movie = await request(app)
-        .get(`${baseURL}/${id}`)
-        .set('Authorization', `Bearer ${token}`);
-
-      expect(movie.status).toBe(StatusCodes.OK);
+      expect(genre.status).toBe(StatusCodes.OK);
     });
   });
 
-  describe('\n => (DELETE) /movies/:id', () => {
-    it('Should not be able delete a movie with wrong id, return 404 - Not found', async () => {
+  describe('\n => (DELETE) /genres/:id', () => {
+    it('Should not be able delete a genre with wrong id, return 404 - Not found', async () => {
       const errorId = 'fe936e37-f4c6-4f8b-adfb-2873ac891efd';
 
-      const movie = await request(app)
+      const genre = await request(app)
         .delete(`${baseURL}/${errorId}`)
         .set('Authorization', `Bearer ${token}`);
 
-      expect(movie.status).toBe(StatusCodes.NOT_FOUND);
+      expect(genre.status).toBe(StatusCodes.NOT_FOUND);
     });
 
-    it('Should not be able delete a movie with wrong UUID format, return 400 - Bad request', async () => {
+    it('Should not be able delete a genre with wrong UUID format, return 400 - Bad request', async () => {
       const errorId = 'e936e37-f4c6-4f8b-adfb-2873ac891efd';
 
-      const movie = await request(app)
+      const genre = await request(app)
         .delete(`${baseURL}/${errorId}`)
         .set('Authorization', `Bearer ${token}`);
 
-      expect(movie.status).toBe(StatusCodes.BAD_REQUEST);
+      expect(genre.status).toBe(StatusCodes.BAD_REQUEST);
     });
 
-    it('Should not be able delete a movie if not admin, return 401 - Unauthorized', async () => {
+    it('Should not be able delete a genre if not admin, return 401 - Unauthorized', async () => {
       const { id } = sampleGenreResponse;
 
-      const movie = await request(app)
+      const genre = await request(app)
         .delete(`${baseURL}/${id}`)
         .set('Authorization', `Bearer ${userToken}`);
 
-      expect(movie.status).toBe(StatusCodes.UNAUTHORIZED);
+      expect(genre.status).toBe(StatusCodes.UNAUTHORIZED);
     });
 
-    it('Should be able delete a movie, return 200 - Ok', async () => {
+    it('Should be able delete a genre, return 200 - Ok', async () => {
       const { id } = sampleGenreResponse;
 
-      const movie = await request(app)
+      const genre = await request(app)
         .delete(`${baseURL}/${id}`)
         .set('Authorization', `Bearer ${token}`);
 
-      expect(movie.status).toBe(StatusCodes.OK);
+      expect(genre.status).toBe(StatusCodes.OK);
     });
-  }); */
+  });
 });

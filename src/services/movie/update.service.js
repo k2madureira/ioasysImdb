@@ -49,11 +49,6 @@ module.exports = {
 
     findAllGenreMovie.forEach(async genreMovie => {
       if (genre.indexOf(genreMovie.genre_id) === -1) {
-        console.log({
-          indexOf: genre.indexOf(genreMovie.genre_id),
-          genre_id: genreMovie.genre_id,
-          id: genreMovie.id,
-        });
         await genreMovieRepository.destroy({ id: genreMovie.id });
       }
     });

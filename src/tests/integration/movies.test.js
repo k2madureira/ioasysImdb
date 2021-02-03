@@ -135,7 +135,7 @@ describe('\n * Movie Endpoints', () => {
     });
   });
 
-  describe('\n (GET) /movies/', () => {
+  describe('\n => (GET) /movies/', () => {
     it('Should not be able lit movies, return 200 - OK', async () => {
       const movie = await request(app)
         .get(`${baseURL}/`)

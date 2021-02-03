@@ -57,7 +57,6 @@ describe('\n * Movie Endpoints', () => {
         .send(sampleMovie);
 
       sampleMovieResponse = movie.body;
-      console.log(sampleMovieResponse);
 
       expect(movie.status).toBe(StatusCodes.CREATED);
     });
@@ -163,7 +162,6 @@ describe('\n * Movie Endpoints', () => {
       const movie = await request(app)
         .get(`${baseURL}/${id}`)
         .set('Authorization', `Bearer ${token}`);
-      console.log({ id, res: sampleMovieResponse });
 
       expect(movie.status).toBe(StatusCodes.OK);
     });

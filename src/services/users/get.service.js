@@ -4,13 +4,13 @@ const { messages } = require('../../helpers');
 const { ApplicationError } = require('../../utils');
 const { userRepository } = require('../../repositories');
 
-module.exports.get = async (id) => {
+module.exports.get = async id => {
   const user = await userRepository.findById(id);
 
   if (!user) {
     throw new ApplicationError(
       messages.notFound('users'),
-      StatusCodes.NOT_FOUND
+      StatusCodes.NOT_FOUND,
     );
   }
 

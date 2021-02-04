@@ -104,6 +104,17 @@ describe('\n * Movie Endpoints', () => {
 
       const { id } = sampleMovieResponse;
 
+      const genreSample = {
+        genre: faker.name.title(),
+      };
+
+      const genre = await request(app)
+        .post(`${baseGenreURL}/`)
+        .set('Authorization', `Bearer ${token}`)
+        .send(genreSample);
+
+      sampleMovie.genre.push(genre.body.id);
+
       const movie = await request(app)
         .put(`${baseURL}/${id}`)
         .set('Authorization', `Bearer ${token}`)
@@ -164,6 +175,16 @@ describe('\n * Movie Endpoints', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(movie.status).toBe(StatusCodes.OK);
+    });
+
+    it('Should not be able detail a movie with wrong id, return 404 - Not found', async () => {
+      const errorId = 'fe936e37-f4c6-4f8b-adfb-2873ac891efd';
+
+      const movie = await request(app)
+        .get(`${baseURL}/${errorId}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(movie.status).toBe(StatusCodes.NOT_FOUND);
     });
   });
 

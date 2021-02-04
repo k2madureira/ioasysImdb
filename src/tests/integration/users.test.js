@@ -113,7 +113,9 @@ describe('\n * User Endpoints', () => {
     it('Should be able update a user, return 200 - Ok', async () => {
       sampleUser.name = faker.name.findName();
       sampleUser.nickname = faker.name.lastName();
-      delete sampleUser.password;
+      sampleUser.oldPassword = sampleUser.password;
+      sampleUser.password = 'NEW_PASSWORD';
+      sampleUser.passwordConfirmation = 'NEW_PASSWORD';
 
       const { id } = sampleUserResponse;
 
@@ -122,10 +124,41 @@ describe('\n * User Endpoints', () => {
         .set('Authorization', `Bearer ${token}`)
         .send(sampleUser);
 
+      delete sampleUser.oldPassword;
+      delete sampleUser.passwordConfirmation;
       sampleUser.password = 'P@SSW0RD';
-      sampleUserResponse = user.body;
 
       expect(user.status).toBe(StatusCodes.OK);
+    });
+
+    it('Should not be able update a user password with wrong password, return 409 - Conflict', async () => {
+      sampleUser.oldPassword = 'NEW_PASSWORD_ERROR';
+      sampleUser.password = 'NEW_PASSWORD';
+      sampleUser.passwordConfirmation = 'NEW_PASSWORD';
+
+      const { id } = sampleUserResponse;
+
+      const user = await request(app)
+        .put(`${baseURL}/${id}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send(sampleUser);
+
+      delete sampleUser.oldPassword;
+      delete sampleUser.passwordConfirmation;
+      sampleUser.password = 'P@SSW0RD';
+
+      expect(user.status).toBe(StatusCodes.CONFLICT);
+    });
+
+    it('Should not be able update a user without fields, return 404 - Not found', async () => {
+      const { id } = sampleUserResponse;
+
+      const user = await request(app)
+        .put(`${baseURL}/${id}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send(sampleUser);
+
+      expect(user.status).toBe(StatusCodes.NOT_FOUND);
     });
 
     it('Should not be able update a user with wrong id, return 404 - Not found', async () => {
@@ -164,14 +197,45 @@ describe('\n * User Endpoints', () => {
     });
   });
 
+  describe('\n => (GET) /users/:id', () => {
+    it('Should be able detail a user, return 200 - Ok', async () => {
+      const { id } = sampleUserResponse;
+
+      const user = await request(app)
+        .get(`${baseURL}/${id}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(user.status).toBe(StatusCodes.OK);
+    });
+
+    it('Should not be able find a user with wrong id, return 404 - Not found', async () => {
+      const errorId = 'fe936e37-f4c6-4f8b-adfb-2873ac891efd';
+
+      const user = await request(app)
+        .get(`${baseURL}/${errorId}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(user.status).toBe(StatusCodes.NOT_FOUND);
+    });
+
+    it('Should not be able detail a user with wrong UUID format, return 400 - Bad request', async () => {
+      const errorId = 'e936e37-f4c6-4f8b-adfb-2873ac891efd';
+
+      const user = await request(app)
+        .get(`${baseURL}/${errorId}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(user.status).toBe(StatusCodes.BAD_REQUEST);
+    });
+  });
+
   describe('\n => (DELETE) /users/:id', () => {
     it('Should not be able delete a user with wrong id, return 404 - Not found', async () => {
       const errorId = 'fe936e37-f4c6-4f8b-adfb-2873ac891efd';
 
       const user = await request(app)
         .delete(`${baseURL}/${errorId}`)
-        .set('Authorization', `Bearer ${token}`)
-        .send(sampleUser);
+        .set('Authorization', `Bearer ${token}`);
 
       expect(user.status).toBe(StatusCodes.NOT_FOUND);
     });
@@ -181,8 +245,7 @@ describe('\n * User Endpoints', () => {
 
       const user = await request(app)
         .delete(`${baseURL}/${errorId}`)
-        .set('Authorization', `Bearer ${token}`)
-        .send(sampleUser);
+        .set('Authorization', `Bearer ${token}`);
 
       expect(user.status).toBe(StatusCodes.BAD_REQUEST);
     });
@@ -192,8 +255,7 @@ describe('\n * User Endpoints', () => {
 
       const user = await request(app)
         .delete(`${baseURL}/${id}`)
-        .set('Authorization', `Bearer ${userToken}`)
-        .send(sampleUser);
+        .set('Authorization', `Bearer ${userToken}`);
 
       expect(user.status).toBe(StatusCodes.UNAUTHORIZED);
     });
@@ -203,8 +265,7 @@ describe('\n * User Endpoints', () => {
 
       const user = await request(app)
         .delete(`${baseURL}/${id}`)
-        .set('Authorization', `Bearer ${token}`)
-        .send(sampleUser);
+        .set('Authorization', `Bearer ${token}`);
 
       expect(user.status).toBe(StatusCodes.OK);
     });

@@ -13,7 +13,9 @@ module.exports.list = async (title, page, limit) => {
     pageQuery,
   );
 
-  const totalMovies = movies.rows.length;
+  const allMovies = await movieRepository.findAll();
+  const totalMovies = allMovies.length;
+
   const totalPage = Math.ceil(totalMovies / limit);
 
   const response = {

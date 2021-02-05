@@ -3,6 +3,7 @@ const { isAdmin } = require('./admin.validation');
 const { movies } = require('./movie.validation');
 const { scores } = require('./score.validation');
 const { genres } = require('./genre.validation');
+const { reports } = require('./report.validation');
 
 module.exports.validationSchemas = {
   users,
@@ -10,4 +11,5 @@ module.exports.validationSchemas = {
   isAdmin,
   scores,
   genres,
+  reports,
 };

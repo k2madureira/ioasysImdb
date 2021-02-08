@@ -39,6 +39,7 @@ const del = {
 
 const list = {
   query: yup.object().shape({
+    title: yup.string(),
     limit: yup.number(),
     page: yup.number().positive().min(1),
   }),

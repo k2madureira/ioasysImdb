@@ -28,7 +28,6 @@ module.exports.detail = async id => {
     count += 1;
   });
 
-  delete data.scores;
   const response = {
     ...data,
     total_votes: count,

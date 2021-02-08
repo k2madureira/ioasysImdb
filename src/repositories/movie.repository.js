@@ -6,7 +6,7 @@ module.exports = {
       where: query,
       attributes,
       include: [
-        { as: 'scores', model: Score, attributes: ['id', 'score'] },
+        { as: 'scores', model: Score, attributes: ['user_id', 'score'] },
         {
           as: 'genres',
           model: Genre,
@@ -27,7 +27,7 @@ module.exports = {
       where: query,
       attributes,
       include: [
-        { as: 'scores', model: Score, attributes: ['id', 'score'] },
+        { as: 'scores', model: Score, attributes: ['user_id', 'score'] },
         {
           as: 'genres',
           model: Genre,

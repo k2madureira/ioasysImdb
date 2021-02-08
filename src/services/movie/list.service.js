@@ -18,16 +18,16 @@ module.exports.list = async (title, page, limit) => {
   const treated = [];
   movies.rows.map(movie => {
     const sumScores = movie.scores.reduce((obj, elem) => {
-      if (!obj.soma) {
+      if (!obj.sum) {
         obj = {
-          soma: 0,
+          sum: 0,
           count: 0,
           avg: 0,
         };
       }
-      obj.soma += elem.score;
+      obj.sum += elem.score;
       obj.count += 1;
-      obj.avg = obj.soma / obj.count;
+      obj.avg = obj.sum / obj.count;
       return obj;
     }, {});
 

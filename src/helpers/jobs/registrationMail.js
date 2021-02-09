@@ -5,7 +5,7 @@ module.exports.registrationMail = {
   async handle({ data }) {
     const { user, parseTemplate } = data;
     await Mail.sendMail({
-      from: 'no-replay@imdb.com',
+      from: 'no-reply@imdb.com',
       to: user.email,
       subject: '[IMDB] Create account',
       html: parseTemplate,

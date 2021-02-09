@@ -6,7 +6,7 @@
   "author": "k2madureira <lenilsonmadureira@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev":"npm-run-all -p dev:*",
+    "dev": "npm-run-all -p dev:*",
     "dev:server": "NODE_ENV=development nodemon app.js",
     "dev:queue": "NODE_ENV=development nodemon queue.js",
     "db:generate": "NODE_ENV=development sequelize migration:generate",

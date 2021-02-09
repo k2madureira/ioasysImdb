@@ -5,7 +5,8 @@ const { morgan } = require('./morgan');
 const { jwt } = require('./jsonwebtoken');
 const { pagination } = require('./pagination');
 const { compare } = require('./compare');
-const { mailer } = require('./mailer');
+const Mail = require('./mailer');
+const { queue } = require('./queue');
 
 module.exports = {
   logger,
@@ -15,5 +16,6 @@ module.exports = {
   jwt,
   pagination,
   compare,
-  mailer,
+  Mail,
+  queue,
 };

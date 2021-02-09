@@ -1,7 +1,9 @@
 const { StatusCodes } = require('http-status-codes');
 const path = require('path');
+const handlebars = require('handlebars');
+const fs = require('fs');
 const { messages } = require('../../helpers');
-const { ApplicationError, mailer } = require('../../utils');
+const { ApplicationError, queue } = require('../../utils');
 const db = require('../../models');
 const { userRepository } = require('../../repositories');
 
@@ -41,22 +43,21 @@ module.exports = {
       'createUser.hbs',
     );
 
-    await mailer({
-      from: {
-        name: 'IMDB',
-        address: 'no-replay@imdb.com',
-      },
-      to: {
+    const templateFileContent = await fs.promises.readFile(createUserTemplate, {
+      encoding: 'utf-8',
+    });
+    const parseTemplate = handlebars.compile(templateFileContent);
+
+    await queue.add('RegistrationMail', {
+      user: {
         name: params.name,
-        address: email,
+        email,
       },
-      subject: '[IMDB] Create account',
-      template: createUserTemplate,
-      variables: {
+      parseTemplate: parseTemplate({
         title: 'New Account',
         email,
         name: params.name,
-      },
+      }),
     });
 
     return response;

@@ -24,6 +24,10 @@ module.exports = {
     preflightContinue: false,
     optionsSuccessStatus: 204,
   },
+  redis: {
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+  },
   email: {
     service: process.env.MAIL_SERVICE,
     from: process.env.MAIL_FROM,

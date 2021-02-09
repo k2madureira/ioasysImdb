@@ -25,6 +25,7 @@ module.exports = {
     optionsSuccessStatus: 204,
   },
   email: {
+    service: process.env.MAIL_SERVICE,
     from: process.env.MAIL_FROM,
     auth: {
       host: process.env.MAIL_HOST,
